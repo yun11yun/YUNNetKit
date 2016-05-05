@@ -130,7 +130,15 @@ static NSString *const kGetHTTPMethod = @"GET";
     NSURL *parsedURL = [NSURL URLWithString:[baseUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 #pragma clang pop
     NSString *queryPrefix = parsedURL.query ? @"&" : @"?";
-    NSString *query = nil;
+    NSString *query = [YUNInternalUtility queryStringWithDictionary:params error:NULL invalidObjectHandler:^id(id object, BOOL *stop) {
+        if ([self isAttachment:object]) {
+            if ([httpMethod isEqualToString:kGetHTTPMethod]) {
+                [YUNLogger singleShotLogEntry:YUNLoggingBehaviorDeveloperErrors logEntry:@"can not use GET to upload a file"];
+            }
+            return nil;
+        }
+        return object;
+    }];
     
     return [NSString stringWithFormat:@"%@%@%@", baseUrl, queryPrefix, query];
 }
@@ -145,6 +153,28 @@ static NSString *const kGetHTTPMethod = @"GET";
     }
     
     return params;
+}
+
+- (YUNRequestConnection *)startWithCompletionHandler:(YUNRequestHandler)handler
+{
+    return nil;
+}
+
+#pragma mark - Debugging helpers
+
+- (NSString *)description
+{
+    NSMutableString *result = [NSMutableString stringWithFormat:@"<%@: %p",
+                               NSStringFromClass([self class]),
+                               self];
+    if (self.path) {
+        [result appendFormat:@", path: %@", self.path];
+    }
+    if (self.HTTPMethod) {
+        [result appendFormat:@", HTTPMethod: %@", self.HTTPMethod];
+    }
+    [result appendFormat:@", parameters: %@>", [self.parameters description]];
+    return result;
 }
 
 @end

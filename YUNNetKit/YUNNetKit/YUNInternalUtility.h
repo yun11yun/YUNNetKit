@@ -63,4 +63,22 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
  */
 + (NSOperatingSystemVersion)operatingSystemVersion;
 
+/*!
+ @abstract Constructs a query string from a dictionary.
+ @param dictionary The dictionary with key/value pairs for the query string.
+ @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
+ @param invalidObjectHandler Handles objects that are invalid, returning a replacement value or nil to ignore.
+ @result Query string representation of the parameters.
+ */
++ (NSString *)queryStringWithDictionary:(NSDictionary *)dictionary
+                                  error:(NSError *__autoreleasing *)errorRef
+                   invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler;
+
+/*!
+ @abstract Converts simple value types to the string equivelant for serializing to a request query or body.
+ @param value The value to be converted.
+ @return The value that may have been converted if able (otherwise the input param).
+ */
++ (id)convertRequestValue:(id)value;
+
 @end

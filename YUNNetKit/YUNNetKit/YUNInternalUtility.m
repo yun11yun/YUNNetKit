@@ -11,6 +11,8 @@
 #import <sys/time.h>
 #import <mach-o/dyld.h>
 
+#import "YUNUtility.h"
+
 typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionMask)
 {
     FBSDKInternalUtilityMajorVersionMask = 0xFFFF0000,
@@ -26,6 +28,17 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
 };
 
 @implementation YUNInternalUtility
+
+
++ (id)convertRequestValue:(id)value
+{
+    if ([value isKindOfClass:[NSNumber class]]) {
+        value = [(NSNumber *)value stringValue];
+    } else if ([value isKindOfClass:[NSURL class]]) {
+        value = [(NSURL *)value absoluteString];
+    }
+    return value;
+}
 
 + (void)dictionary:(NSMutableDictionary *)dictionary setObject:(id)object forKey:(id<NSCopying>)key
 {
@@ -101,6 +114,47 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
     return operatingSystemVersion;
 }
 
++ (NSString *)queryStringWithDictionary:(NSDictionary *)dictionary
+                                  error:(NSError *__autoreleasing *)errorRef
+                   invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler
+{
+    NSMutableString *queryString = [[NSMutableString alloc] init];
+    __block BOOL hasParameters = NO;
+    if (dictionary) {
+        NSMutableArray *keys = [[dictionary allKeys] mutableCopy];
+        // remove non-string keys, as they are not valid
+        [keys filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            return [evaluatedObject isKindOfClass:[NSString class]];
+        }]];
+        // sort the keys so that the query string order is deterministic
+        [keys sortUsingSelector:@selector(compare:)];
+        BOOL stop = NO;
+        for (NSString *key in keys) {
+            id value = [self convertRequestValue:dictionary[key]];
+            if ([value isKindOfClass:[NSString class]]) {
+                value = [YUNUtility URLEncode:value];
+            }
+            if (invalidObjectHandler && ![value isKindOfClass:[NSString class]]) {
+                value = invalidObjectHandler(value, &stop);
+                if (stop) {
+                    break;
+                }
+            }
+            if (value) {
+                if (hasParameters) {
+                    [queryString appendString:@"&"];
+                }
+                [queryString appendFormat:@"%@=%@", key, value];
+                hasParameters = YES;
+            }
+        }
+    }
+    if (errorRef != NULL) {
+        *errorRef = nil;
+    }
+    return ([queryString length] ? [queryString copy] : nil);
+}
+
 #pragma mark - Helper Methods
 
 + (NSComparisonResult)_compareOperatingSystemVersion:(NSOperatingSystemVersion)version1
@@ -122,5 +176,7 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
         return NSOrderedSame;
     }
 }
+
+
 
 @end

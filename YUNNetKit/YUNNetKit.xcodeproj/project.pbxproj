@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C253C1B01CDAD4FD00F6FA5E /* YUNUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */; };
+		C253C1B11CDAD4FD00F6FA5E /* YUNUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */; };
 		FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */; };
 		FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */; };
 		FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */; };
@@ -55,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNUtility.h; sourceTree = "<group>"; };
+		C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNUtility.m; sourceTree = "<group>"; };
 		FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNSettings+Internal.h"; sourceTree = "<group>"; };
 		FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestConnection.h; sourceTree = "<group>"; };
 		FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestConnection.m; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 				FAB34E711CD2603E00F3C961 /* YUNTypeUtility.m */,
 				FAB34E741CD2612500F3C961 /* YUNContants.h */,
 				FAB34E751CD2612500F3C961 /* YUNContants.m */,
+				C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */,
+				C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */,
 				FABFA3BD1CD0F58E00B4505E /* Network */,
 				FAE6EC861CCFB541003F9619 /* YUNMath.h */,
 				FAE6EC871CCFB541003F9619 /* YUNMath.m */,
@@ -203,6 +209,7 @@
 				FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */,
 				FAE42F6C1CDA34260074133F /* YUNRequest+Internal.h in Headers */,
 				FAE6EC841CCFB30A003F9619 /* YUNInternalUtility.h in Headers */,
+				C253C1B01CDAD4FD00F6FA5E /* YUNUtility.h in Headers */,
 				FABFA3C01CD0F9CD00B4505E /* YUNLogger.h in Headers */,
 				FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */,
 				FAC0DCCB1CD8F7650023E9CE /* YUNRequest.h in Headers */,
@@ -314,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB34E731CD2603E00F3C961 /* YUNTypeUtility.m in Sources */,
+				C253C1B11CDAD4FD00F6FA5E /* YUNUtility.m in Sources */,
 				FABFA3BC1CD0F58800B4505E /* YUNURLConnection.m in Sources */,
 				FAB34E691CD2582300F3C961 /* YUNRequestBody.m in Sources */,
 				FABFA3C51CD106CA00B4505E /* YUNSettings.m in Sources */,
