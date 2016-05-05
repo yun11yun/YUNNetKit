@@ -1,0 +1,527 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */; };
+		FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */; };
+		FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */; };
+		FAB34E641CD2561700F3C961 /* YUNRequestDataAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E621CD2561700F3C961 /* YUNRequestDataAttachment.h */; };
+		FAB34E651CD2561700F3C961 /* YUNRequestDataAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E631CD2561700F3C961 /* YUNRequestDataAttachment.m */; };
+		FAB34E681CD2582300F3C961 /* YUNRequestBody.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E661CD2582300F3C961 /* YUNRequestBody.h */; };
+		FAB34E691CD2582300F3C961 /* YUNRequestBody.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E671CD2582300F3C961 /* YUNRequestBody.m */; };
+		FAB34E6B1CD25B1E00F3C961 /* YUNRequestBodyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E6A1CD25B1E00F3C961 /* YUNRequestBodyTests.m */; };
+		FAB34E6E1CD25FDC00F3C961 /* YUNError.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E6C1CD25FDC00F3C961 /* YUNError.h */; };
+		FAB34E6F1CD25FDC00F3C961 /* YUNError.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E6D1CD25FDC00F3C961 /* YUNError.m */; };
+		FAB34E721CD2603E00F3C961 /* YUNTypeUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E701CD2603E00F3C961 /* YUNTypeUtility.h */; };
+		FAB34E731CD2603E00F3C961 /* YUNTypeUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E711CD2603E00F3C961 /* YUNTypeUtility.m */; };
+		FAB34E761CD2612500F3C961 /* YUNContants.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E741CD2612500F3C961 /* YUNContants.h */; };
+		FAB34E771CD2612500F3C961 /* YUNContants.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E751CD2612500F3C961 /* YUNContants.m */; };
+		FABFA3BB1CD0F58800B4505E /* YUNURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = FABFA3B91CD0F58800B4505E /* YUNURLConnection.h */; };
+		FABFA3BC1CD0F58800B4505E /* YUNURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFA3BA1CD0F58800B4505E /* YUNURLConnection.m */; };
+		FABFA3C01CD0F9CD00B4505E /* YUNLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = FABFA3BE1CD0F9CD00B4505E /* YUNLogger.h */; };
+		FABFA3C11CD0F9CD00B4505E /* YUNLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFA3BF1CD0F9CD00B4505E /* YUNLogger.m */; };
+		FABFA3C41CD106CA00B4505E /* YUNSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = FABFA3C21CD106CA00B4505E /* YUNSettings.h */; };
+		FABFA3C51CD106CA00B4505E /* YUNSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFA3C31CD106CA00B4505E /* YUNSettings.m */; };
+		FAC0DCC81CD8F2EA0023E9CE /* YUNErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC0DCC71CD8F2EA0023E9CE /* YUNErrorTests.m */; };
+		FAC0DCCB1CD8F7650023E9CE /* YUNRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = FAC0DCC91CD8F7650023E9CE /* YUNRequest.h */; };
+		FAC0DCCC1CD8F7650023E9CE /* YUNRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC0DCCA1CD8F7650023E9CE /* YUNRequest.m */; };
+		FAE42F6C1CDA34260074133F /* YUNRequest+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE42F6A1CDA34260074133F /* YUNRequest+Internal.h */; };
+		FAE6EC681CCFAAD4003F9619 /* YUNNetKit.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE6EC671CCFAAD4003F9619 /* YUNNetKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FAE6EC6F1CCFAAD4003F9619 /* YUNNetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE6EC641CCFAAD4003F9619 /* YUNNetKit.framework */; };
+		FAE6EC741CCFAAD4003F9619 /* YUNNetKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE6EC731CCFAAD4003F9619 /* YUNNetKitTests.m */; };
+		FAE6EC801CCFAB31003F9619 /* YUNAccessToken.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE6EC7E1CCFAB31003F9619 /* YUNAccessToken.h */; };
+		FAE6EC811CCFAB31003F9619 /* YUNAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE6EC7F1CCFAB31003F9619 /* YUNAccessToken.m */; };
+		FAE6EC841CCFB30A003F9619 /* YUNInternalUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE6EC821CCFB30A003F9619 /* YUNInternalUtility.h */; };
+		FAE6EC851CCFB30A003F9619 /* YUNInternalUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE6EC831CCFB30A003F9619 /* YUNInternalUtility.m */; };
+		FAE6EC881CCFB541003F9619 /* YUNMath.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE6EC861CCFB541003F9619 /* YUNMath.h */; };
+		FAE6EC891CCFB541003F9619 /* YUNMath.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE6EC871CCFB541003F9619 /* YUNMath.m */; };
+		FAE6EC8C1CCFB5B5003F9619 /* YUNMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE6EC8A1CCFB5B5003F9619 /* YUNMacros.h */; };
+		FAE6EC8F1CCFB6F9003F9619 /* YUNAccessTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE6EC8E1CCFB6F9003F9619 /* YUNAccessTokenTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FAE6EC701CCFAAD4003F9619 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE6EC5B1CCFAAD4003F9619 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE6EC631CCFAAD4003F9619;
+			remoteInfo = YUNNetKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNSettings+Internal.h"; sourceTree = "<group>"; };
+		FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestConnection.h; sourceTree = "<group>"; };
+		FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestConnection.m; sourceTree = "<group>"; };
+		FAB34E621CD2561700F3C961 /* YUNRequestDataAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestDataAttachment.h; sourceTree = "<group>"; };
+		FAB34E631CD2561700F3C961 /* YUNRequestDataAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestDataAttachment.m; sourceTree = "<group>"; };
+		FAB34E661CD2582300F3C961 /* YUNRequestBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestBody.h; sourceTree = "<group>"; };
+		FAB34E671CD2582300F3C961 /* YUNRequestBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestBody.m; sourceTree = "<group>"; };
+		FAB34E6A1CD25B1E00F3C961 /* YUNRequestBodyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestBodyTests.m; sourceTree = "<group>"; };
+		FAB34E6C1CD25FDC00F3C961 /* YUNError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNError.h; sourceTree = "<group>"; };
+		FAB34E6D1CD25FDC00F3C961 /* YUNError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNError.m; sourceTree = "<group>"; };
+		FAB34E701CD2603E00F3C961 /* YUNTypeUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNTypeUtility.h; sourceTree = "<group>"; };
+		FAB34E711CD2603E00F3C961 /* YUNTypeUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNTypeUtility.m; sourceTree = "<group>"; };
+		FAB34E741CD2612500F3C961 /* YUNContants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNContants.h; sourceTree = "<group>"; };
+		FAB34E751CD2612500F3C961 /* YUNContants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNContants.m; sourceTree = "<group>"; };
+		FABFA3B91CD0F58800B4505E /* YUNURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNURLConnection.h; sourceTree = "<group>"; };
+		FABFA3BA1CD0F58800B4505E /* YUNURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNURLConnection.m; sourceTree = "<group>"; };
+		FABFA3BE1CD0F9CD00B4505E /* YUNLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNLogger.h; sourceTree = "<group>"; };
+		FABFA3BF1CD0F9CD00B4505E /* YUNLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNLogger.m; sourceTree = "<group>"; };
+		FABFA3C21CD106CA00B4505E /* YUNSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNSettings.h; sourceTree = "<group>"; };
+		FABFA3C31CD106CA00B4505E /* YUNSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNSettings.m; sourceTree = "<group>"; };
+		FAC0DCC71CD8F2EA0023E9CE /* YUNErrorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNErrorTests.m; sourceTree = "<group>"; };
+		FAC0DCC91CD8F7650023E9CE /* YUNRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequest.h; sourceTree = "<group>"; };
+		FAC0DCCA1CD8F7650023E9CE /* YUNRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequest.m; sourceTree = "<group>"; };
+		FAE42F6A1CDA34260074133F /* YUNRequest+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNRequest+Internal.h"; sourceTree = "<group>"; };
+		FAE6EC641CCFAAD4003F9619 /* YUNNetKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YUNNetKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE6EC671CCFAAD4003F9619 /* YUNNetKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YUNNetKit.h; sourceTree = "<group>"; };
+		FAE6EC691CCFAAD4003F9619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAE6EC6E1CCFAAD4003F9619 /* YUNNetKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YUNNetKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE6EC731CCFAAD4003F9619 /* YUNNetKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YUNNetKitTests.m; sourceTree = "<group>"; };
+		FAE6EC751CCFAAD4003F9619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAE6EC7E1CCFAB31003F9619 /* YUNAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNAccessToken.h; sourceTree = "<group>"; };
+		FAE6EC7F1CCFAB31003F9619 /* YUNAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNAccessToken.m; sourceTree = "<group>"; };
+		FAE6EC821CCFB30A003F9619 /* YUNInternalUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNInternalUtility.h; sourceTree = "<group>"; };
+		FAE6EC831CCFB30A003F9619 /* YUNInternalUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNInternalUtility.m; sourceTree = "<group>"; };
+		FAE6EC861CCFB541003F9619 /* YUNMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNMath.h; sourceTree = "<group>"; };
+		FAE6EC871CCFB541003F9619 /* YUNMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNMath.m; sourceTree = "<group>"; };
+		FAE6EC8A1CCFB5B5003F9619 /* YUNMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNMacros.h; sourceTree = "<group>"; };
+		FAE6EC8E1CCFB6F9003F9619 /* YUNAccessTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNAccessTokenTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FAE6EC601CCFAAD4003F9619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE6EC6B1CCFAAD4003F9619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE6EC6F1CCFAAD4003F9619 /* YUNNetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FABFA3BD1CD0F58E00B4505E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FABFA3B91CD0F58800B4505E /* YUNURLConnection.h */,
+				FABFA3BA1CD0F58800B4505E /* YUNURLConnection.m */,
+				FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */,
+				FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */,
+				FAB34E621CD2561700F3C961 /* YUNRequestDataAttachment.h */,
+				FAB34E631CD2561700F3C961 /* YUNRequestDataAttachment.m */,
+				FAB34E661CD2582300F3C961 /* YUNRequestBody.h */,
+				FAB34E671CD2582300F3C961 /* YUNRequestBody.m */,
+				FAC0DCC91CD8F7650023E9CE /* YUNRequest.h */,
+				FAC0DCCA1CD8F7650023E9CE /* YUNRequest.m */,
+				FAE42F6A1CDA34260074133F /* YUNRequest+Internal.h */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		FAE6EC5A1CCFAAD4003F9619 = {
+			isa = PBXGroup;
+			children = (
+				FAE6EC661CCFAAD4003F9619 /* YUNNetKit */,
+				FAE6EC721CCFAAD4003F9619 /* YUNNetKitTests */,
+				FAE6EC651CCFAAD4003F9619 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FAE6EC651CCFAAD4003F9619 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAE6EC641CCFAAD4003F9619 /* YUNNetKit.framework */,
+				FAE6EC6E1CCFAAD4003F9619 /* YUNNetKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FAE6EC661CCFAAD4003F9619 /* YUNNetKit */ = {
+			isa = PBXGroup;
+			children = (
+				FAE6EC671CCFAAD4003F9619 /* YUNNetKit.h */,
+				FAE6EC7E1CCFAB31003F9619 /* YUNAccessToken.h */,
+				FAE6EC7F1CCFAB31003F9619 /* YUNAccessToken.m */,
+				FAE6EC821CCFB30A003F9619 /* YUNInternalUtility.h */,
+				FAE6EC831CCFB30A003F9619 /* YUNInternalUtility.m */,
+				FABFA3BE1CD0F9CD00B4505E /* YUNLogger.h */,
+				FABFA3BF1CD0F9CD00B4505E /* YUNLogger.m */,
+				FABFA3C21CD106CA00B4505E /* YUNSettings.h */,
+				FABFA3C31CD106CA00B4505E /* YUNSettings.m */,
+				FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */,
+				FAB34E6C1CD25FDC00F3C961 /* YUNError.h */,
+				FAB34E6D1CD25FDC00F3C961 /* YUNError.m */,
+				FAB34E701CD2603E00F3C961 /* YUNTypeUtility.h */,
+				FAB34E711CD2603E00F3C961 /* YUNTypeUtility.m */,
+				FAB34E741CD2612500F3C961 /* YUNContants.h */,
+				FAB34E751CD2612500F3C961 /* YUNContants.m */,
+				FABFA3BD1CD0F58E00B4505E /* Network */,
+				FAE6EC861CCFB541003F9619 /* YUNMath.h */,
+				FAE6EC871CCFB541003F9619 /* YUNMath.m */,
+				FAE6EC8A1CCFB5B5003F9619 /* YUNMacros.h */,
+				FAE6EC691CCFAAD4003F9619 /* Info.plist */,
+			);
+			path = YUNNetKit;
+			sourceTree = "<group>";
+		};
+		FAE6EC721CCFAAD4003F9619 /* YUNNetKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				FAE6EC731CCFAAD4003F9619 /* YUNNetKitTests.m */,
+				FAB34E6A1CD25B1E00F3C961 /* YUNRequestBodyTests.m */,
+				FAE6EC8E1CCFB6F9003F9619 /* YUNAccessTokenTests.m */,
+				FAC0DCC71CD8F2EA0023E9CE /* YUNErrorTests.m */,
+				FAE6EC751CCFAAD4003F9619 /* Info.plist */,
+			);
+			path = YUNNetKitTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FAE6EC611CCFAAD4003F9619 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB34E6E1CD25FDC00F3C961 /* YUNError.h in Headers */,
+				FABFA3C41CD106CA00B4505E /* YUNSettings.h in Headers */,
+				FAB34E721CD2603E00F3C961 /* YUNTypeUtility.h in Headers */,
+				FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */,
+				FAE42F6C1CDA34260074133F /* YUNRequest+Internal.h in Headers */,
+				FAE6EC841CCFB30A003F9619 /* YUNInternalUtility.h in Headers */,
+				FABFA3C01CD0F9CD00B4505E /* YUNLogger.h in Headers */,
+				FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */,
+				FAC0DCCB1CD8F7650023E9CE /* YUNRequest.h in Headers */,
+				FAB34E761CD2612500F3C961 /* YUNContants.h in Headers */,
+				FABFA3BB1CD0F58800B4505E /* YUNURLConnection.h in Headers */,
+				FAE6EC881CCFB541003F9619 /* YUNMath.h in Headers */,
+				FAE6EC8C1CCFB5B5003F9619 /* YUNMacros.h in Headers */,
+				FAE6EC681CCFAAD4003F9619 /* YUNNetKit.h in Headers */,
+				FAB34E681CD2582300F3C961 /* YUNRequestBody.h in Headers */,
+				FAB34E641CD2561700F3C961 /* YUNRequestDataAttachment.h in Headers */,
+				FAE6EC801CCFAB31003F9619 /* YUNAccessToken.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		FAE6EC631CCFAAD4003F9619 /* YUNNetKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE6EC781CCFAAD4003F9619 /* Build configuration list for PBXNativeTarget "YUNNetKit" */;
+			buildPhases = (
+				FAE6EC5F1CCFAAD4003F9619 /* Sources */,
+				FAE6EC601CCFAAD4003F9619 /* Frameworks */,
+				FAE6EC611CCFAAD4003F9619 /* Headers */,
+				FAE6EC621CCFAAD4003F9619 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YUNNetKit;
+			productName = YUNNetKit;
+			productReference = FAE6EC641CCFAAD4003F9619 /* YUNNetKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FAE6EC6D1CCFAAD4003F9619 /* YUNNetKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE6EC7B1CCFAAD4003F9619 /* Build configuration list for PBXNativeTarget "YUNNetKitTests" */;
+			buildPhases = (
+				FAE6EC6A1CCFAAD4003F9619 /* Sources */,
+				FAE6EC6B1CCFAAD4003F9619 /* Frameworks */,
+				FAE6EC6C1CCFAAD4003F9619 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAE6EC711CCFAAD4003F9619 /* PBXTargetDependency */,
+			);
+			name = YUNNetKitTests;
+			productName = YUNNetKitTests;
+			productReference = FAE6EC6E1CCFAAD4003F9619 /* YUNNetKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FAE6EC5B1CCFAAD4003F9619 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = bit_tea;
+				TargetAttributes = {
+					FAE6EC631CCFAAD4003F9619 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					FAE6EC6D1CCFAAD4003F9619 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = FAE6EC5E1CCFAAD4003F9619 /* Build configuration list for PBXProject "YUNNetKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FAE6EC5A1CCFAAD4003F9619;
+			productRefGroup = FAE6EC651CCFAAD4003F9619 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FAE6EC631CCFAAD4003F9619 /* YUNNetKit */,
+				FAE6EC6D1CCFAAD4003F9619 /* YUNNetKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FAE6EC621CCFAAD4003F9619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE6EC6C1CCFAAD4003F9619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FAE6EC5F1CCFAAD4003F9619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB34E731CD2603E00F3C961 /* YUNTypeUtility.m in Sources */,
+				FABFA3BC1CD0F58800B4505E /* YUNURLConnection.m in Sources */,
+				FAB34E691CD2582300F3C961 /* YUNRequestBody.m in Sources */,
+				FABFA3C51CD106CA00B4505E /* YUNSettings.m in Sources */,
+				FAC0DCCC1CD8F7650023E9CE /* YUNRequest.m in Sources */,
+				FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */,
+				FAE6EC851CCFB30A003F9619 /* YUNInternalUtility.m in Sources */,
+				FAB34E6F1CD25FDC00F3C961 /* YUNError.m in Sources */,
+				FAE6EC811CCFAB31003F9619 /* YUNAccessToken.m in Sources */,
+				FAB34E651CD2561700F3C961 /* YUNRequestDataAttachment.m in Sources */,
+				FABFA3C11CD0F9CD00B4505E /* YUNLogger.m in Sources */,
+				FAB34E771CD2612500F3C961 /* YUNContants.m in Sources */,
+				FAE6EC891CCFB541003F9619 /* YUNMath.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE6EC6A1CCFAAD4003F9619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAB34E6B1CD25B1E00F3C961 /* YUNRequestBodyTests.m in Sources */,
+				FAE6EC8F1CCFB6F9003F9619 /* YUNAccessTokenTests.m in Sources */,
+				FAE6EC741CCFAAD4003F9619 /* YUNNetKitTests.m in Sources */,
+				FAC0DCC81CD8F2EA0023E9CE /* YUNErrorTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FAE6EC711CCFAAD4003F9619 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAE6EC631CCFAAD4003F9619 /* YUNNetKit */;
+			targetProxy = FAE6EC701CCFAAD4003F9619 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FAE6EC761CCFAAD4003F9619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FAE6EC771CCFAAD4003F9619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FAE6EC791CCFAAD4003F9619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = YUNNetKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-1.YUNNetKit";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		FAE6EC7A1CCFAAD4003F9619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = YUNNetKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-1.YUNNetKit";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		FAE6EC7C1CCFAAD4003F9619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = YUNNetKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-1.YUNNetKitTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FAE6EC7D1CCFAAD4003F9619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = YUNNetKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-1.YUNNetKitTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FAE6EC5E1CCFAAD4003F9619 /* Build configuration list for PBXProject "YUNNetKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE6EC761CCFAAD4003F9619 /* Debug */,
+				FAE6EC771CCFAAD4003F9619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAE6EC781CCFAAD4003F9619 /* Build configuration list for PBXNativeTarget "YUNNetKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE6EC791CCFAAD4003F9619 /* Debug */,
+				FAE6EC7A1CCFAAD4003F9619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAE6EC7B1CCFAAD4003F9619 /* Build configuration list for PBXNativeTarget "YUNNetKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE6EC7C1CCFAAD4003F9619 /* Debug */,
+				FAE6EC7D1CCFAAD4003F9619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FAE6EC5B1CCFAAD4003F9619 /* Project object */;
+}
