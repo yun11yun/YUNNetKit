@@ -81,4 +81,11 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
  */
 + (id)convertRequestValue:(id)value;
 
+/*!
+ @abstract Returns bundle for returning localized strings
+ @discussion We assume a convention of a bundle named FBSDKStrings.bundle, otherwise we
+ return the main bundle.
+ */
++ (NSBundle *)bundleForStrings;
+
 @end

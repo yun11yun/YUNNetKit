@@ -299,3 +299,13 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 - (void)overrideVersionPartWith:(NSString *)version;
 
 @end
+
+/*!
+ @abstract The key in the result dictionary for requests to old versions of the Graph API
+ whose response is not a JSON object.
+ 
+ @discussion When a request returns a non-JSON response (such as a "true" literal), that response
+ will be wrapped into a dictionary using this const as the key. This only applies for very few Graph API
+ prior to v2.1.
+ */
+extern NSString *const YUNNonJSONResponseProperty;

@@ -8,6 +8,12 @@
 
 #import "YUNRequestConnection.h"
 
+#import "YUNContants.h"
+#import "YUNError.h"
+#import "YUNRequest+Internal.h"
+#import "YUNRequestBody.h"
+#import "YUNRequestDataAttachment.h"
+
 @implementation YUNRequestConnection
 
 @end

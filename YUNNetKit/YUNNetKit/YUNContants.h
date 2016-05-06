@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "YUNMacros.h"
+
 /*
  * @abstract The error domain for all errors from YUNNetKit
  * @discussion Error codes from the SDK in the range 0-99 are reserved for  this domain.

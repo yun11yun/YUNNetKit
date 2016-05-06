@@ -9,6 +9,20 @@
 /* Begin PBXBuildFile section */
 		C253C1B01CDAD4FD00F6FA5E /* YUNUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */; };
 		C253C1B11CDAD4FD00F6FA5E /* YUNUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */; };
+		C253C1CA1CDB5C6300F6FA5E /* YUNRequestMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = C253C1C81CDB5C6300F6FA5E /* YUNRequestMetadata.h */; };
+		C253C1CB1CDB5C6300F6FA5E /* YUNRequestMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = C253C1C91CDB5C6300F6FA5E /* YUNRequestMetadata.m */; };
+		C253C1CF1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C253C1CD1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h */; };
+		C253C1D01CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C253C1CE1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m */; };
+		C2613DC71CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C2613DC51CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h */; };
+		C2613DC81CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C2613DC61CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m */; };
+		C2613DCB1CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C2613DC91CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h */; };
+		C28B9FE41CDC2A040085A3C9 /* YUNErrorConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C28B9FE21CDC2A040085A3C9 /* YUNErrorConfiguration.h */; };
+		C28B9FE51CDC2A040085A3C9 /* YUNErrorConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C28B9FE31CDC2A040085A3C9 /* YUNErrorConfiguration.m */; };
+		C28B9FE81CDC339A0085A3C9 /* YUNDialogConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C28B9FE61CDC339A0085A3C9 /* YUNDialogConfiguration.h */; };
+		C28B9FE91CDC339A0085A3C9 /* YUNDialogConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C28B9FE71CDC339A0085A3C9 /* YUNDialogConfiguration.m */; };
+		C28B9FF81CDC72FB0085A3C9 /* YUNServerConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C28B9FF61CDC72FB0085A3C9 /* YUNServerConfiguration.h */; };
+		C28B9FF91CDC72FB0085A3C9 /* YUNServerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C28B9FF71CDC72FB0085A3C9 /* YUNServerConfiguration.m */; };
+		C28B9FFC1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C28B9FFA1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h */; };
 		FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */; };
 		FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */; };
 		FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */; };
@@ -59,6 +73,20 @@
 /* Begin PBXFileReference section */
 		C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNUtility.h; sourceTree = "<group>"; };
 		C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNUtility.m; sourceTree = "<group>"; };
+		C253C1C81CDB5C6300F6FA5E /* YUNRequestMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestMetadata.h; sourceTree = "<group>"; };
+		C253C1C91CDB5C6300F6FA5E /* YUNRequestMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestMetadata.m; sourceTree = "<group>"; };
+		C253C1CD1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNErrorRecoveryConfiguration.h; sourceTree = "<group>"; };
+		C253C1CE1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNErrorRecoveryConfiguration.m; sourceTree = "<group>"; };
+		C2613DC51CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNServerConfigurationManager.h; sourceTree = "<group>"; };
+		C2613DC61CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNServerConfigurationManager.m; sourceTree = "<group>"; };
+		C2613DC91CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNServerConfigurationManager+Internal.h"; sourceTree = "<group>"; };
+		C28B9FE21CDC2A040085A3C9 /* YUNErrorConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNErrorConfiguration.h; sourceTree = "<group>"; };
+		C28B9FE31CDC2A040085A3C9 /* YUNErrorConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNErrorConfiguration.m; sourceTree = "<group>"; };
+		C28B9FE61CDC339A0085A3C9 /* YUNDialogConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNDialogConfiguration.h; sourceTree = "<group>"; };
+		C28B9FE71CDC339A0085A3C9 /* YUNDialogConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNDialogConfiguration.m; sourceTree = "<group>"; };
+		C28B9FF61CDC72FB0085A3C9 /* YUNServerConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNServerConfiguration.h; sourceTree = "<group>"; };
+		C28B9FF71CDC72FB0085A3C9 /* YUNServerConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNServerConfiguration.m; sourceTree = "<group>"; };
+		C28B9FFA1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNServerConfiguration+Internal.h"; sourceTree = "<group>"; };
 		FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNSettings+Internal.h"; sourceTree = "<group>"; };
 		FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestConnection.h; sourceTree = "<group>"; };
 		FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestConnection.m; sourceTree = "<group>"; };
@@ -118,6 +146,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C253C1CC1CDB5EED00F6FA5E /* ServerConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				C28B9FE21CDC2A040085A3C9 /* YUNErrorConfiguration.h */,
+				C28B9FE31CDC2A040085A3C9 /* YUNErrorConfiguration.m */,
+				C253C1CD1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h */,
+				C253C1CE1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m */,
+				C28B9FE61CDC339A0085A3C9 /* YUNDialogConfiguration.h */,
+				C28B9FE71CDC339A0085A3C9 /* YUNDialogConfiguration.m */,
+				C28B9FF61CDC72FB0085A3C9 /* YUNServerConfiguration.h */,
+				C28B9FF71CDC72FB0085A3C9 /* YUNServerConfiguration.m */,
+				C28B9FFA1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h */,
+				C2613DC51CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h */,
+				C2613DC61CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m */,
+				C2613DC91CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h */,
+			);
+			name = ServerConfiguration;
+			sourceTree = "<group>";
+		};
 		FABFA3BD1CD0F58E00B4505E /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +179,8 @@
 				FAC0DCC91CD8F7650023E9CE /* YUNRequest.h */,
 				FAC0DCCA1CD8F7650023E9CE /* YUNRequest.m */,
 				FAE42F6A1CDA34260074133F /* YUNRequest+Internal.h */,
+				C253C1C81CDB5C6300F6FA5E /* YUNRequestMetadata.h */,
+				C253C1C91CDB5C6300F6FA5E /* YUNRequestMetadata.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -175,6 +224,7 @@
 				FAB34E751CD2612500F3C961 /* YUNContants.m */,
 				C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */,
 				C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */,
+				C253C1CC1CDB5EED00F6FA5E /* ServerConfiguration */,
 				FABFA3BD1CD0F58E00B4505E /* Network */,
 				FAE6EC861CCFB541003F9619 /* YUNMath.h */,
 				FAE6EC871CCFB541003F9619 /* YUNMath.m */,
@@ -208,8 +258,13 @@
 				FAB34E721CD2603E00F3C961 /* YUNTypeUtility.h in Headers */,
 				FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */,
 				FAE42F6C1CDA34260074133F /* YUNRequest+Internal.h in Headers */,
+				C28B9FE41CDC2A040085A3C9 /* YUNErrorConfiguration.h in Headers */,
+				C2613DCB1CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h in Headers */,
+				C28B9FFC1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h in Headers */,
 				FAE6EC841CCFB30A003F9619 /* YUNInternalUtility.h in Headers */,
+				C253C1CF1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h in Headers */,
 				C253C1B01CDAD4FD00F6FA5E /* YUNUtility.h in Headers */,
+				C253C1CA1CDB5C6300F6FA5E /* YUNRequestMetadata.h in Headers */,
 				FABFA3C01CD0F9CD00B4505E /* YUNLogger.h in Headers */,
 				FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */,
 				FAC0DCCB1CD8F7650023E9CE /* YUNRequest.h in Headers */,
@@ -217,10 +272,13 @@
 				FABFA3BB1CD0F58800B4505E /* YUNURLConnection.h in Headers */,
 				FAE6EC881CCFB541003F9619 /* YUNMath.h in Headers */,
 				FAE6EC8C1CCFB5B5003F9619 /* YUNMacros.h in Headers */,
+				C28B9FF81CDC72FB0085A3C9 /* YUNServerConfiguration.h in Headers */,
 				FAE6EC681CCFAAD4003F9619 /* YUNNetKit.h in Headers */,
 				FAB34E681CD2582300F3C961 /* YUNRequestBody.h in Headers */,
 				FAB34E641CD2561700F3C961 /* YUNRequestDataAttachment.h in Headers */,
+				C28B9FE81CDC339A0085A3C9 /* YUNDialogConfiguration.h in Headers */,
 				FAE6EC801CCFAB31003F9619 /* YUNAccessToken.h in Headers */,
+				C2613DC71CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,15 +381,21 @@
 				FAB34E731CD2603E00F3C961 /* YUNTypeUtility.m in Sources */,
 				C253C1B11CDAD4FD00F6FA5E /* YUNUtility.m in Sources */,
 				FABFA3BC1CD0F58800B4505E /* YUNURLConnection.m in Sources */,
+				C253C1CB1CDB5C6300F6FA5E /* YUNRequestMetadata.m in Sources */,
+				C2613DC81CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m in Sources */,
 				FAB34E691CD2582300F3C961 /* YUNRequestBody.m in Sources */,
 				FABFA3C51CD106CA00B4505E /* YUNSettings.m in Sources */,
 				FAC0DCCC1CD8F7650023E9CE /* YUNRequest.m in Sources */,
+				C253C1D01CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m in Sources */,
 				FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */,
 				FAE6EC851CCFB30A003F9619 /* YUNInternalUtility.m in Sources */,
+				C28B9FE51CDC2A040085A3C9 /* YUNErrorConfiguration.m in Sources */,
+				C28B9FF91CDC72FB0085A3C9 /* YUNServerConfiguration.m in Sources */,
 				FAB34E6F1CD25FDC00F3C961 /* YUNError.m in Sources */,
 				FAE6EC811CCFAB31003F9619 /* YUNAccessToken.m in Sources */,
 				FAB34E651CD2561700F3C961 /* YUNRequestDataAttachment.m in Sources */,
 				FABFA3C11CD0F9CD00B4505E /* YUNLogger.m in Sources */,
+				C28B9FE91CDC339A0085A3C9 /* YUNDialogConfiguration.m in Sources */,
 				FAB34E771CD2612500F3C961 /* YUNContants.m in Sources */,
 				FAE6EC891CCFB541003F9619 /* YUNMath.m in Sources */,
 			);
