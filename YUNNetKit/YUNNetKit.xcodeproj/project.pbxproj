@@ -23,6 +23,8 @@
 		C28B9FF81CDC72FB0085A3C9 /* YUNServerConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C28B9FF61CDC72FB0085A3C9 /* YUNServerConfiguration.h */; };
 		C28B9FF91CDC72FB0085A3C9 /* YUNServerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C28B9FF71CDC72FB0085A3C9 /* YUNServerConfiguration.m */; };
 		C28B9FFC1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C28B9FFA1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h */; };
+		C29714581CE349AB004DC77E /* YUNKeychainStore.h in Headers */ = {isa = PBXBuildFile; fileRef = C29714561CE349AB004DC77E /* YUNKeychainStore.h */; };
+		C29714591CE349AB004DC77E /* YUNKeychainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C29714571CE349AB004DC77E /* YUNKeychainStore.m */; };
 		FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */; };
 		FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */; };
 		FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */; };
@@ -96,6 +98,8 @@
 		C28B9FF61CDC72FB0085A3C9 /* YUNServerConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNServerConfiguration.h; sourceTree = "<group>"; };
 		C28B9FF71CDC72FB0085A3C9 /* YUNServerConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNServerConfiguration.m; sourceTree = "<group>"; };
 		C28B9FFA1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNServerConfiguration+Internal.h"; sourceTree = "<group>"; };
+		C29714561CE349AB004DC77E /* YUNKeychainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNKeychainStore.h; sourceTree = "<group>"; };
+		C29714571CE349AB004DC77E /* YUNKeychainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNKeychainStore.m; sourceTree = "<group>"; };
 		FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNSettings+Internal.h"; sourceTree = "<group>"; };
 		FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestConnection.h; sourceTree = "<group>"; };
 		FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestConnection.m; sourceTree = "<group>"; };
@@ -193,6 +197,8 @@
 				FAE1DACC1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m */,
 				FAE041781CDF81A300C19565 /* YUNAccessTokenCacheV4.h */,
 				FAE041791CDF81A300C19565 /* YUNAccessTokenCacheV4.m */,
+				C29714561CE349AB004DC77E /* YUNKeychainStore.h */,
+				C29714571CE349AB004DC77E /* YUNKeychainStore.m */,
 			);
 			name = TokenCaching;
 			sourceTree = "<group>";
@@ -325,6 +331,7 @@
 				FAB34E681CD2582300F3C961 /* YUNRequestBody.h in Headers */,
 				FAB34E641CD2561700F3C961 /* YUNRequestDataAttachment.h in Headers */,
 				C28B9FE81CDC339A0085A3C9 /* YUNDialogConfiguration.h in Headers */,
+				C29714581CE349AB004DC77E /* YUNKeychainStore.h in Headers */,
 				FAE6EC801CCFAB31003F9619 /* YUNAccessToken.h in Headers */,
 				C2613DC71CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h in Headers */,
 			);
@@ -430,6 +437,7 @@
 				C253C1B11CDAD4FD00F6FA5E /* YUNUtility.m in Sources */,
 				FABFA3BC1CD0F58800B4505E /* YUNURLConnection.m in Sources */,
 				C253C1CB1CDB5C6300F6FA5E /* YUNRequestMetadata.m in Sources */,
+				C29714591CE349AB004DC77E /* YUNKeychainStore.m in Sources */,
 				FAE041801CDF839100C19565 /* YUNDynamicFrameworkLoader.m in Sources */,
 				C2613DC81CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m in Sources */,
 				FAB34E691CD2582300F3C961 /* YUNRequestBody.m in Sources */,

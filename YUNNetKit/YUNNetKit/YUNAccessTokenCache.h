@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "YUNAccessToken.h"
 #import "YUNAccessTokenCaching.h"
 
 @interface YUNAccessTokenCache : NSObject<YUNAccessTokenCaching>

@@ -137,7 +137,7 @@
 #pragma mark - Security APIs
 
 // These are local wrappers around the corresponding methods in Security/SecRandom.h
-extern int yundfl_SecRandomCopyingBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
+extern int yundfl_SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
 
 // These are local wrappers around Keychain API
 extern OSStatus yundfl_SecItemUpdate(CFDictionaryRef query, CFDictionaryRef attributesToUpdate);

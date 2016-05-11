@@ -8,6 +8,9 @@
 
 #import "YUNAccessTokenCacheV4.h"
 
+#import "YUNDynamicFrameworkLoader.h"
+#import "YUNInternalUtility.h"
+
 @implementation YUNAccessTokenCacheV4
 
 @end

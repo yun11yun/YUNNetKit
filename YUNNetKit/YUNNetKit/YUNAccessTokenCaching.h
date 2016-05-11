@@ -14,7 +14,7 @@
 
 - (YUNAccessToken *)fetchAccessToken;
 
-- (void)cacheAccessToken;
+- (void)cacheAccessToken:(YUNAccessToken *)token;
 
 - (void)clearCache;
 
