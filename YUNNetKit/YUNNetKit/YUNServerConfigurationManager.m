@@ -6,7 +6,7 @@
 //  Copyright © 2016 bit_tea. All rights reserved.
 //
 
-#import "YUNServerConfigurationManager.h"
+#import "YUNServerConfigurationManager+Internal.h"
 
 #import "YUNRequest+Internal.h"
 #import "YUNRequest.h"
@@ -60,13 +60,20 @@ typedef NS_OPTIONS(NSUInteger, YUNServerConfigurationManagerAppEventsFeatures)
 
 + (YUNServerConfiguration *)cachedServerConfiguration
 {
-    NSString *appID = [YUNSettings appID];
     @synchronized(self) {
         // load the server oniguration if we don't have it already
         [self loadServerConfigurationWithCompletionBlock:NULL];
         
         //use whatever configuration we have or the default
-        return _serverConfiguration ?: 
+        return _serverConfiguration;
+    }
+}
+
++ (void)loadServerConfigurationWithCompletionBlock:(YUNServerConfigurationManagerLoadBlock)completionBlock
+{
+    void (^loadBlock)(void) = NULL;
+    @synchronized(self) {
+        
     }
 }
 

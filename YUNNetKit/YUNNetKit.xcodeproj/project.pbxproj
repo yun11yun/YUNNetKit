@@ -46,6 +46,15 @@
 		FAC0DCC81CD8F2EA0023E9CE /* YUNErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC0DCC71CD8F2EA0023E9CE /* YUNErrorTests.m */; };
 		FAC0DCCB1CD8F7650023E9CE /* YUNRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = FAC0DCC91CD8F7650023E9CE /* YUNRequest.h */; };
 		FAC0DCCC1CD8F7650023E9CE /* YUNRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC0DCCA1CD8F7650023E9CE /* YUNRequest.m */; };
+		FAE0417A1CDF81A300C19565 /* YUNAccessTokenCacheV4.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE041781CDF81A300C19565 /* YUNAccessTokenCacheV4.h */; };
+		FAE0417B1CDF81A300C19565 /* YUNAccessTokenCacheV4.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE041791CDF81A300C19565 /* YUNAccessTokenCacheV4.m */; };
+		FAE0417F1CDF839100C19565 /* YUNDynamicFrameworkLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE0417D1CDF839100C19565 /* YUNDynamicFrameworkLoader.h */; };
+		FAE041801CDF839100C19565 /* YUNDynamicFrameworkLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE0417E1CDF839100C19565 /* YUNDynamicFrameworkLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FAE1DAC61CDF7CC7007355F2 /* YUNAccessTokenCaching.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE1DAC51CDF7CC7007355F2 /* YUNAccessTokenCaching.h */; };
+		FAE1DAC91CDF7D24007355F2 /* YUNAccessTokenCache.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE1DAC71CDF7D24007355F2 /* YUNAccessTokenCache.h */; };
+		FAE1DACA1CDF7D24007355F2 /* YUNAccessTokenCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE1DAC81CDF7D24007355F2 /* YUNAccessTokenCache.m */; };
+		FAE1DACD1CDF7D87007355F2 /* YUNAccessTokenCacheV3.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE1DACB1CDF7D87007355F2 /* YUNAccessTokenCacheV3.h */; };
+		FAE1DACE1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE1DACC1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m */; };
 		FAE42F6C1CDA34260074133F /* YUNRequest+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE42F6A1CDA34260074133F /* YUNRequest+Internal.h */; };
 		FAE6EC681CCFAAD4003F9619 /* YUNNetKit.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE6EC671CCFAAD4003F9619 /* YUNNetKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE6EC6F1CCFAAD4003F9619 /* YUNNetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE6EC641CCFAAD4003F9619 /* YUNNetKit.framework */; };
@@ -110,6 +119,15 @@
 		FAC0DCC71CD8F2EA0023E9CE /* YUNErrorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNErrorTests.m; sourceTree = "<group>"; };
 		FAC0DCC91CD8F7650023E9CE /* YUNRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequest.h; sourceTree = "<group>"; };
 		FAC0DCCA1CD8F7650023E9CE /* YUNRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequest.m; sourceTree = "<group>"; };
+		FAE041781CDF81A300C19565 /* YUNAccessTokenCacheV4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNAccessTokenCacheV4.h; sourceTree = "<group>"; };
+		FAE041791CDF81A300C19565 /* YUNAccessTokenCacheV4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNAccessTokenCacheV4.m; sourceTree = "<group>"; };
+		FAE0417D1CDF839100C19565 /* YUNDynamicFrameworkLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNDynamicFrameworkLoader.h; sourceTree = "<group>"; };
+		FAE0417E1CDF839100C19565 /* YUNDynamicFrameworkLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNDynamicFrameworkLoader.m; sourceTree = "<group>"; };
+		FAE1DAC51CDF7CC7007355F2 /* YUNAccessTokenCaching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNAccessTokenCaching.h; sourceTree = "<group>"; };
+		FAE1DAC71CDF7D24007355F2 /* YUNAccessTokenCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNAccessTokenCache.h; sourceTree = "<group>"; };
+		FAE1DAC81CDF7D24007355F2 /* YUNAccessTokenCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNAccessTokenCache.m; sourceTree = "<group>"; };
+		FAE1DACB1CDF7D87007355F2 /* YUNAccessTokenCacheV3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNAccessTokenCacheV3.h; sourceTree = "<group>"; };
+		FAE1DACC1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNAccessTokenCacheV3.m; sourceTree = "<group>"; };
 		FAE42F6A1CDA34260074133F /* YUNRequest+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNRequest+Internal.h"; sourceTree = "<group>"; };
 		FAE6EC641CCFAAD4003F9619 /* YUNNetKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YUNNetKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE6EC671CCFAAD4003F9619 /* YUNNetKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YUNNetKit.h; sourceTree = "<group>"; };
@@ -165,6 +183,20 @@
 			name = ServerConfiguration;
 			sourceTree = "<group>";
 		};
+		FA74EA031CDF5516007CAB83 /* TokenCaching */ = {
+			isa = PBXGroup;
+			children = (
+				FAE1DAC51CDF7CC7007355F2 /* YUNAccessTokenCaching.h */,
+				FAE1DAC71CDF7D24007355F2 /* YUNAccessTokenCache.h */,
+				FAE1DAC81CDF7D24007355F2 /* YUNAccessTokenCache.m */,
+				FAE1DACB1CDF7D87007355F2 /* YUNAccessTokenCacheV3.h */,
+				FAE1DACC1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m */,
+				FAE041781CDF81A300C19565 /* YUNAccessTokenCacheV4.h */,
+				FAE041791CDF81A300C19565 /* YUNAccessTokenCacheV4.m */,
+			);
+			name = TokenCaching;
+			sourceTree = "<group>";
+		};
 		FABFA3BD1CD0F58E00B4505E /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +215,15 @@
 				C253C1C91CDB5C6300F6FA5E /* YUNRequestMetadata.m */,
 			);
 			name = Network;
+			sourceTree = "<group>";
+		};
+		FAE0417C1CDF835200C19565 /* Internal_NoARC */ = {
+			isa = PBXGroup;
+			children = (
+				FAE0417D1CDF839100C19565 /* YUNDynamicFrameworkLoader.h */,
+				FAE0417E1CDF839100C19565 /* YUNDynamicFrameworkLoader.m */,
+			);
+			name = Internal_NoARC;
 			sourceTree = "<group>";
 		};
 		FAE6EC5A1CCFAAD4003F9619 = {
@@ -224,6 +265,8 @@
 				FAB34E751CD2612500F3C961 /* YUNContants.m */,
 				C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */,
 				C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */,
+				FAE0417C1CDF835200C19565 /* Internal_NoARC */,
+				FA74EA031CDF5516007CAB83 /* TokenCaching */,
 				C253C1CC1CDB5EED00F6FA5E /* ServerConfiguration */,
 				FABFA3BD1CD0F58E00B4505E /* Network */,
 				FAE6EC861CCFB541003F9619 /* YUNMath.h */,
@@ -255,10 +298,14 @@
 			files = (
 				FAB34E6E1CD25FDC00F3C961 /* YUNError.h in Headers */,
 				FABFA3C41CD106CA00B4505E /* YUNSettings.h in Headers */,
+				FAE1DAC61CDF7CC7007355F2 /* YUNAccessTokenCaching.h in Headers */,
 				FAB34E721CD2603E00F3C961 /* YUNTypeUtility.h in Headers */,
 				FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */,
 				FAE42F6C1CDA34260074133F /* YUNRequest+Internal.h in Headers */,
+				FAE1DAC91CDF7D24007355F2 /* YUNAccessTokenCache.h in Headers */,
 				C28B9FE41CDC2A040085A3C9 /* YUNErrorConfiguration.h in Headers */,
+				FAE0417A1CDF81A300C19565 /* YUNAccessTokenCacheV4.h in Headers */,
+				FAE1DACD1CDF7D87007355F2 /* YUNAccessTokenCacheV3.h in Headers */,
 				C2613DCB1CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h in Headers */,
 				C28B9FFC1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h in Headers */,
 				FAE6EC841CCFB30A003F9619 /* YUNInternalUtility.h in Headers */,
@@ -270,6 +317,7 @@
 				FAC0DCCB1CD8F7650023E9CE /* YUNRequest.h in Headers */,
 				FAB34E761CD2612500F3C961 /* YUNContants.h in Headers */,
 				FABFA3BB1CD0F58800B4505E /* YUNURLConnection.h in Headers */,
+				FAE0417F1CDF839100C19565 /* YUNDynamicFrameworkLoader.h in Headers */,
 				FAE6EC881CCFB541003F9619 /* YUNMath.h in Headers */,
 				FAE6EC8C1CCFB5B5003F9619 /* YUNMacros.h in Headers */,
 				C28B9FF81CDC72FB0085A3C9 /* YUNServerConfiguration.h in Headers */,
@@ -382,15 +430,19 @@
 				C253C1B11CDAD4FD00F6FA5E /* YUNUtility.m in Sources */,
 				FABFA3BC1CD0F58800B4505E /* YUNURLConnection.m in Sources */,
 				C253C1CB1CDB5C6300F6FA5E /* YUNRequestMetadata.m in Sources */,
+				FAE041801CDF839100C19565 /* YUNDynamicFrameworkLoader.m in Sources */,
 				C2613DC81CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m in Sources */,
 				FAB34E691CD2582300F3C961 /* YUNRequestBody.m in Sources */,
 				FABFA3C51CD106CA00B4505E /* YUNSettings.m in Sources */,
 				FAC0DCCC1CD8F7650023E9CE /* YUNRequest.m in Sources */,
 				C253C1D01CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m in Sources */,
+				FAE1DACA1CDF7D24007355F2 /* YUNAccessTokenCache.m in Sources */,
+				FAE1DACE1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m in Sources */,
 				FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */,
 				FAE6EC851CCFB30A003F9619 /* YUNInternalUtility.m in Sources */,
 				C28B9FE51CDC2A040085A3C9 /* YUNErrorConfiguration.m in Sources */,
 				C28B9FF91CDC72FB0085A3C9 /* YUNServerConfiguration.m in Sources */,
+				FAE0417B1CDF81A300C19565 /* YUNAccessTokenCacheV4.m in Sources */,
 				FAB34E6F1CD25FDC00F3C961 /* YUNError.m in Sources */,
 				FAE6EC811CCFAB31003F9619 /* YUNAccessToken.m in Sources */,
 				FAB34E651CD2561700F3C961 /* YUNRequestDataAttachment.m in Sources */,

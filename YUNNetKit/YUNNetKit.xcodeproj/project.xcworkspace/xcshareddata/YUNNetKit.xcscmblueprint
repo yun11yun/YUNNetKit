@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "517869FC24C1CCB343E65521172E08313FAE700C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "517869FC24C1CCB343E65521172E08313FAE700C" : 0,
+    "4BEAB100645321342EE41E37FB0F353A8E0231C6" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D2E2796F-1CD2-4880-8500-501EA5DCC388",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "517869FC24C1CCB343E65521172E08313FAE700C" : "YUNNetKit\/",
+    "4BEAB100645321342EE41E37FB0F353A8E0231C6" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "YUNNetKit",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "YUNNetKit\/YUNNetKit.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/yun11yun\/YUNHeaderView.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4BEAB100645321342EE41E37FB0F353A8E0231C6"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/yun11yun\/YUNNetKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "517869FC24C1CCB343E65521172E08313FAE700C"
+    }
+  ]
+}
