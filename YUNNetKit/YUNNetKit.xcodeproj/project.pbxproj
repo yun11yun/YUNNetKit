@@ -13,6 +13,12 @@
 		C253C1CB1CDB5C6300F6FA5E /* YUNRequestMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = C253C1C91CDB5C6300F6FA5E /* YUNRequestMetadata.m */; };
 		C253C1CF1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C253C1CD1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h */; };
 		C253C1D01CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C253C1CE1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m */; };
+		C258B9FA1CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.h in Headers */ = {isa = PBXBuildFile; fileRef = C258B9F81CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.h */; };
+		C258B9FB1CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.m in Sources */ = {isa = PBXBuildFile; fileRef = C258B9F91CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.m */; };
+		C258B9FE1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.h in Headers */ = {isa = PBXBuildFile; fileRef = C258B9FC1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.h */; };
+		C258B9FF1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.m in Sources */ = {isa = PBXBuildFile; fileRef = C258B9FD1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.m */; };
+		C258BA021CE5AF300051D33B /* YUNKeychainStoreViaBundleID.h in Headers */ = {isa = PBXBuildFile; fileRef = C258BA001CE5AF300051D33B /* YUNKeychainStoreViaBundleID.h */; };
+		C258BA031CE5AF300051D33B /* YUNKeychainStoreViaBundleID.m in Sources */ = {isa = PBXBuildFile; fileRef = C258BA011CE5AF300051D33B /* YUNKeychainStoreViaBundleID.m */; };
 		C2613DC71CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C2613DC51CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h */; };
 		C2613DC81CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C2613DC61CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m */; };
 		C2613DCB1CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C2613DC91CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h */; };
@@ -88,6 +94,12 @@
 		C253C1C91CDB5C6300F6FA5E /* YUNRequestMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestMetadata.m; sourceTree = "<group>"; };
 		C253C1CD1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNErrorRecoveryConfiguration.h; sourceTree = "<group>"; };
 		C253C1CE1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNErrorRecoveryConfiguration.m; sourceTree = "<group>"; };
+		C258B9F81CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNAccessTokenCacheV3_21.h; sourceTree = "<group>"; };
+		C258B9F91CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNAccessTokenCacheV3_21.m; sourceTree = "<group>"; };
+		C258B9FC1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNAccessTokenCacheV3_17.h; sourceTree = "<group>"; };
+		C258B9FD1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNAccessTokenCacheV3_17.m; sourceTree = "<group>"; };
+		C258BA001CE5AF300051D33B /* YUNKeychainStoreViaBundleID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNKeychainStoreViaBundleID.h; sourceTree = "<group>"; };
+		C258BA011CE5AF300051D33B /* YUNKeychainStoreViaBundleID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNKeychainStoreViaBundleID.m; sourceTree = "<group>"; };
 		C2613DC51CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNServerConfigurationManager.h; sourceTree = "<group>"; };
 		C2613DC61CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNServerConfigurationManager.m; sourceTree = "<group>"; };
 		C2613DC91CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNServerConfigurationManager+Internal.h"; sourceTree = "<group>"; };
@@ -193,12 +205,18 @@
 				FAE1DAC51CDF7CC7007355F2 /* YUNAccessTokenCaching.h */,
 				FAE1DAC71CDF7D24007355F2 /* YUNAccessTokenCache.h */,
 				FAE1DAC81CDF7D24007355F2 /* YUNAccessTokenCache.m */,
+				C258B9FC1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.h */,
+				C258B9FD1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.m */,
+				C258B9F81CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.h */,
+				C258B9F91CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.m */,
 				FAE1DACB1CDF7D87007355F2 /* YUNAccessTokenCacheV3.h */,
 				FAE1DACC1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m */,
 				FAE041781CDF81A300C19565 /* YUNAccessTokenCacheV4.h */,
 				FAE041791CDF81A300C19565 /* YUNAccessTokenCacheV4.m */,
 				C29714561CE349AB004DC77E /* YUNKeychainStore.h */,
 				C29714571CE349AB004DC77E /* YUNKeychainStore.m */,
+				C258BA001CE5AF300051D33B /* YUNKeychainStoreViaBundleID.h */,
+				C258BA011CE5AF300051D33B /* YUNKeychainStoreViaBundleID.m */,
 			);
 			name = TokenCaching;
 			sourceTree = "<group>";
@@ -309,12 +327,14 @@
 				FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */,
 				FAE42F6C1CDA34260074133F /* YUNRequest+Internal.h in Headers */,
 				FAE1DAC91CDF7D24007355F2 /* YUNAccessTokenCache.h in Headers */,
+				C258BA021CE5AF300051D33B /* YUNKeychainStoreViaBundleID.h in Headers */,
 				C28B9FE41CDC2A040085A3C9 /* YUNErrorConfiguration.h in Headers */,
 				FAE0417A1CDF81A300C19565 /* YUNAccessTokenCacheV4.h in Headers */,
 				FAE1DACD1CDF7D87007355F2 /* YUNAccessTokenCacheV3.h in Headers */,
 				C2613DCB1CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h in Headers */,
 				C28B9FFC1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h in Headers */,
 				FAE6EC841CCFB30A003F9619 /* YUNInternalUtility.h in Headers */,
+				C258B9FA1CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.h in Headers */,
 				C253C1CF1CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.h in Headers */,
 				C253C1B01CDAD4FD00F6FA5E /* YUNUtility.h in Headers */,
 				C253C1CA1CDB5C6300F6FA5E /* YUNRequestMetadata.h in Headers */,
@@ -324,6 +344,7 @@
 				FAB34E761CD2612500F3C961 /* YUNContants.h in Headers */,
 				FABFA3BB1CD0F58800B4505E /* YUNURLConnection.h in Headers */,
 				FAE0417F1CDF839100C19565 /* YUNDynamicFrameworkLoader.h in Headers */,
+				C258B9FE1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.h in Headers */,
 				FAE6EC881CCFB541003F9619 /* YUNMath.h in Headers */,
 				FAE6EC8C1CCFB5B5003F9619 /* YUNMacros.h in Headers */,
 				C28B9FF81CDC72FB0085A3C9 /* YUNServerConfiguration.h in Headers */,
@@ -437,12 +458,14 @@
 				C253C1B11CDAD4FD00F6FA5E /* YUNUtility.m in Sources */,
 				FABFA3BC1CD0F58800B4505E /* YUNURLConnection.m in Sources */,
 				C253C1CB1CDB5C6300F6FA5E /* YUNRequestMetadata.m in Sources */,
+				C258BA031CE5AF300051D33B /* YUNKeychainStoreViaBundleID.m in Sources */,
 				C29714591CE349AB004DC77E /* YUNKeychainStore.m in Sources */,
 				FAE041801CDF839100C19565 /* YUNDynamicFrameworkLoader.m in Sources */,
 				C2613DC81CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m in Sources */,
 				FAB34E691CD2582300F3C961 /* YUNRequestBody.m in Sources */,
 				FABFA3C51CD106CA00B4505E /* YUNSettings.m in Sources */,
 				FAC0DCCC1CD8F7650023E9CE /* YUNRequest.m in Sources */,
+				C258B9FF1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.m in Sources */,
 				C253C1D01CDB5F2B00F6FA5E /* YUNErrorRecoveryConfiguration.m in Sources */,
 				FAE1DACA1CDF7D24007355F2 /* YUNAccessTokenCache.m in Sources */,
 				FAE1DACE1CDF7D87007355F2 /* YUNAccessTokenCacheV3.m in Sources */,
@@ -450,6 +473,7 @@
 				FAE6EC851CCFB30A003F9619 /* YUNInternalUtility.m in Sources */,
 				C28B9FE51CDC2A040085A3C9 /* YUNErrorConfiguration.m in Sources */,
 				C28B9FF91CDC72FB0085A3C9 /* YUNServerConfiguration.m in Sources */,
+				C258B9FB1CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.m in Sources */,
 				FAE0417B1CDF81A300C19565 /* YUNAccessTokenCacheV4.m in Sources */,
 				FAB34E6F1CD25FDC00F3C961 /* YUNError.m in Sources */,
 				FAE6EC811CCFAB31003F9619 /* YUNAccessToken.m in Sources */,
