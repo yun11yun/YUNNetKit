@@ -88,4 +88,14 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
  */
 + (NSBundle *)bundleForStrings;
 
+/*!
+ @abstract Extracts permissions from a response fetched from me/permissions
+ @param responseObject the response
+ @param grantedPermissions the set to add granted permissions to
+ @param declinedPermissions the set to add decliend permissions to.
+ */
++ (void)extractPermissionsFromResponse:(NSDictionary *)responseObject
+                    grantedPermissions:(NSMutableSet *)grantedPermissions
+                   declinedPermissions:(NSMutableSet *)declinedPermissions;
+
 @end

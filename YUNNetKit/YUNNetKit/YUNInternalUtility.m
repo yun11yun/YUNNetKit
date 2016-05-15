@@ -189,4 +189,23 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
     return bundle;
 }
 
++ (void)extractPermissionsFromResponse:(NSDictionary *)responseObject
+                    grantedPermissions:(NSMutableSet *)grantedPermissions
+                   declinedPermissions:(NSMutableSet *)declinedPermissions
+{
+    NSArray *resultData = responseObject[@"data"];
+    if (resultData.count > 0) {
+        for (NSDictionary *permissionsDictionary in resultData) {
+            NSString *permissionName = permissionsDictionary[@"permission"];
+            NSString *status = permissionsDictionary[@"status"];
+            
+            if ([status isEqualToString:@"granted"]) {
+                [grantedPermissions addObject:permissionName];
+            } else if ([status isEqualToString:@"declined"]) {
+                [declinedPermissions addObject:permissionName];
+            }
+        }
+    }
+}
+
 @end
