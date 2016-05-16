@@ -210,12 +210,6 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     _delegateQueue = queue;
 }
 
-- (NSMutableURLRequest *)requestWithBatch:(NSArray *)requests
-                                  timeout:(NSTimeInterval)timeout
-{
-    return nil;
-}
-
 #pragma mark - Private methods (request generation)
 
 //
@@ -285,6 +279,123 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
 }
 
 //
+// Serializes all requests in the batch to JSON and appends the result to
+// body. Also names all attachments that need to go as separate blocks in
+// the body of the request.
+//
+// All the requests are serialized into JSON, with any binary attachments
+// named and referenced by name in the JSON.
+//
+- (void)appendJSONRequests:(NSArray *)requests
+                    toBody:(YUNRequestBody *)body
+        andNameAttachments:(NSMutableDictionary *)attachments
+                    logger:(YUNLogger *)logger
+{
+    NSMutableArray *batch = [[NSMutableArray alloc] init];
+    NSString *batchToken = nil;
+    for (YUNRequestMetadata *metadata in requests) {
+        NSString *individualToken = [self accessTokenWithRequest:metadata.request];
+        BOOL isClientToken = [YUNSettings clientToken] &&
+        [individualToken hasPrefix:[YUNSettings clientToken]];
+        if (!batchToken &&
+            !isClientToken) {
+            batchToken = individualToken;
+        }
+        [self addRequest:metadata
+                 toBatch:batch
+             attachments:attachments
+              batchToken:[batchToken isEqualToString:individualToken] ? nil : individualToken];
+    }
+    
+    NSString *jsonBatch = [YUNInternalUtility JSONStringForObject:batch error:NULL invalidObjectHandler:NULL];
+    
+    [body appendWithKey:kBatchKey fromValue:jsonBatch logger:logger];
+    if (batchToken) {
+        [body appendWithKey:kBatchKey fromValue:batchToken logger:logger];
+    }
+}
+
+// Validate that all GET requests after v2.4 have a "fields" param
+- (void)_validateFieldsParamForGetRequests:(NSArray *)requests
+{
+    for (YUNRequestMetadata *metadata in requests) {
+        YUNRequest *request = metadata.request;
+        if ([request.HTTPMethod.uppercaseString isEqualToString:@"GET"] &&
+            request.parameters[@"fields"] &&
+            [request.path rangeOfString:@"fields="].location == NSNotFound) {
+            [YUNLogger singleShotLogEntry:YUNLoggingBehaviorDeveloperErrors
+                             formatString:@"starting with API v2.4,GET requests for /%@ should contain an explicit \"fields\" parameters", request.path];
+        }
+    }
+}
+
+//
+// Generaates a NSURLRequest based on the contents of self.requests, and sets
+// options on the request. Chooses betwooen URL_based request for a single
+// request and JSON-based request for batches.
+- (NSMutableURLRequest *)requestWithBatch:(NSArray *)requests
+                                  timeout:(NSTimeInterval)timeout
+{
+    YUNRequestBody *body = [[YUNRequestBody alloc] init];
+    YUNLogger *bodyLogger = [[YUNLogger alloc] initWithLoggingBehavior:_logger.loggingBehavior];
+    YUNLogger *attachmentLogger = [[YUNLogger alloc] initWithLoggingBehavior:_logger.loggingBehavior];
+    
+    NSMutableURLRequest *request;
+    
+    if (requests.count == 0) {
+        [[NSException exceptionWithName:NSInvalidArgumentException
+                                reason:@"YUNRequestConnection: Must have at least one request or urlRequest not specified."
+                              userInfo:nil]
+         raise];
+    }
+    
+    [self _validateFieldsParamForGetRequests:requests];
+    
+    if ([requests count] == 1) {
+        YUNRequestMetadata *metadata = [requests objectAtIndex:0];
+        NSURL *url = [NSURL URLWithString:[self urlStringForSingleRequest:metadata.request forBatch:NO]];
+        request = [NSMutableURLRequest requestWithURL:url
+                                          cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                      timeoutInterval:timeout];
+        
+        // HTTP methods aare case-sensitive; be helpful in case someone provided a mixed case one.
+        NSString *httpMethod = [metadata.request.HTTPMethod uppercaseString];
+        [request setHTTPMethod:httpMethod];
+        [self appendAttachments:metadata.request.parameters
+                         toBody:body
+                    addFromData:[httpMethod isEqualToString:@"POST"]
+                         logger:attachmentLogger];
+    } else {
+        // Find the session with an app ID and use that as the batch_app_id. If we can't
+        // find one, try to load it from the plist. As a last resort, pass 0.
+        NSString *batchAppID = [YUNSettings appID];
+        if (!batchAppID || batchAppID.length) {
+            // The API batch method requires either an access token or batch_app_id.
+            // If we can't determine an App ID to use for the batch, we can't issue it.
+            [[NSException exceptionWithName:NSInternalInconsistencyException
+                                     reason:@"YUNRequestConnection: [YUNSettings appID] must be specified for batch requests"
+                                   userInfo:nil]
+             raise];
+
+        }
+        [body appendWithKey:@"batch_app_id" fromValue:batchAppID logger:bodyLogger];
+        
+        NSMutableDictionary *attachments = [[NSMutableDictionary alloc] init];
+        
+        [self appendJSONRequests:requests
+                          toBody:body
+              andNameAttachments:attachments
+                          logger:bodyLogger];
+        
+        [self appendAttachments:attachments
+                         toBody:body
+                    addFromData:NO
+                         logger:attachmentLogger];
+        NSURL *url = [YUNInternalUtility ]
+    }
+}
+
+//
 // Generates a URL for a batch containing only a single request,
 // adn names all attachments that need to go in the bogy of the request.
 //
@@ -312,6 +423,14 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
      attatchLogger:(YUNLogger *)attachmentLogger
 {
     
+}
+
+- (NSString *)accessTokenWithRequest:(YUNRequest *)request
+{
+    NSString *token = request.tokenString ?: request.parameters[kAccessTokenKey];
+    if (!token && !(request.flags & YUNRequestFlagSkipClientToken && [YUNSettings clientToken].length > 0)) {
+        return [NSString stringWithFormat:@"%@|%@", [YUNSettings appID], [YUNSettings clientToken]];
+    }
 }
 
 - (void)registerTokenToOmitFromLog:(NSString *)token

@@ -12,6 +12,9 @@
 #import <mach-o/dyld.h>
 
 #import "YUNUtility.h"
+#import "YUNTypeUtility.h"
+#import "YUNError.h"
+#import "YUNSettings.h"
 
 typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionMask)
 {
@@ -206,6 +209,141 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
             }
         }
     }
+}
+
++ (NSString *)JSONStringForObject:(id)object
+                            error:(NSError *__autoreleasing *)errorRef
+             invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler
+{
+    if (invalidObjectHandler || ![NSJSONSerialization isValidJSONObject:object]) {
+        object = [self _convertObjectToJSONObject:object invalidObjectHandler:invalidObjectHandler stop:NULL];
+        if (![NSJSONSerialization isValidJSONObject:object]) {
+            if (errorRef != NULL) {
+                *errorRef = [YUNError invalidArgumentErrorWithName:@"object"
+                                                               value:object
+                                                             message:@"Invalid object for JSON serialization."];
+            }
+            return nil;
+        }
+    }
+    NSData *data = [NSJSONSerialization dataWithJSONObject:object options:0 error:errorRef];
+    if (!data) {
+        return nil;
+    }
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
++ (id)_convertObjectToJSONObject:(id)object
+            invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler
+                            stop:(BOOL *)stopRef
+{
+    __block BOOL stop = NO;
+    if ([object isKindOfClass:[NSString class]] || [object isKindOfClass:[NSNumber class]]) {
+        // good to go, keep the object
+    } else if ([object isKindOfClass:[NSURL class]]) {
+        object = [(NSURL *)object absoluteString];
+    } else if ([object isKindOfClass:[NSDictionary class]]) {
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+        [(NSDictionary *)object enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *dictionaryStop) {
+            [self dictionary:dictionary
+                   setObject:[self _convertObjectToJSONObject:obj invalidObjectHandler:invalidObjectHandler stop:&stop]
+                      forKey:[YUNTypeUtility stringValue:key]];
+            if (stop) {
+                *dictionaryStop = YES;
+            }
+        }];
+        object = dictionary;
+    } else if ([object isKindOfClass:[NSArray class]]) {
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for (id obj in (NSArray *)object) {
+            id convertedObj = [self _convertObjectToJSONObject:obj invalidObjectHandler:invalidObjectHandler stop:&stop];
+            [self array:array addObject:convertedObj];
+            if (stop) {
+                break;
+            }
+        }
+        object = array;
+    } else {
+        object = invalidObjectHandler(object, stopRef);
+    }
+    if (stopRef != NULL) {
+        *stopRef = stop;
+    }
+    return object;
+}
+
++ (void)array:(NSMutableArray *)array addObject:(id)object
+{
+    if (object) {
+        [array addObject:object];
+    }
+}
+
++ (NSURL *)URLWithHostPrefix:(NSString *)hostPrefix
+                        path:(NSString *)path
+             queryParameters:(NSDictionary *)queryParameters
+              defaultVersion:(NSString *)defaultVersion
+                       error:(NSError *__autoreleasing *)errorRef
+{
+    if ([hostPrefix length] && ![hostPrefix hasPrefix:@"."]) {
+        hostPrefix = [hostPrefix stringByAppendingString:@"."];
+    }
+    
+    NSString *host = @"facebook.com";
+    NSString *domainPart = [YUNSettings facebookDomainPart];
+    if ([domainPart length]) {
+        host = [[NSString alloc] initWithFormat:@"%@.%@", domainPart, host];
+    }
+    host = [NSString stringWithFormat:@"%@%@", hostPrefix ?: @"", host ?: @""];
+    
+    if ([path length]) {
+        if (![path hasPrefix:@"/"]) {
+            path = [@"/" stringByAppendingString:path];
+        }
+    }
+    return [self URLWithScheme:@"https"
+                          host:host
+                          path:path
+               queryParameters:queryParameters
+                         error:errorRef];
+}
+
++ (NSURL *)URLWithScheme:(NSString *)scheme
+                    host:(NSString *)host
+                    path:(NSString *)path
+         queryParameters:(NSDictionary *)queryParameters
+                   error:(NSError *__autoreleasing *)errorRef
+{
+    if (![path hasPrefix:@"/"]) {
+        path = [@"/" stringByAppendingString:path ?: @""];
+    }
+    
+    NSString *queryString = nil;
+    if ([queryParameters count]) {
+        NSError *queryStringError;
+        queryString = [@"?" stringByAppendingString:[YUNUtility queryStringWithDictionary:queryParameters error:&queryStringError]];
+        if (!queryString) {
+            if (errorRef != NULL) {
+                *errorRef = [YUNError invalidArgumentErrorWithName:@"queryParameters"
+                                                             value:queryParameters
+                                                           message:nil underlyingError:queryStringError];
+            }
+            return nil;
+        }
+    }
+    
+    NSURL *URL = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@://%@%@%@",scheme ?: @"",
+                                               host ?: @"",
+                                               path ?: @"",
+                                                queryString ?: @""]];
+    if (errorRef != NULL) {
+        if (URL) {
+            *errorRef = nil;
+        } else {
+            *errorRef = [YUNError unknownErrorWithMessage:@"Unknown error building URL."];
+        }
+    }
+    return URL;
 }
 
 @end

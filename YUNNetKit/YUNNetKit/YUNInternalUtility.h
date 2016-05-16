@@ -98,4 +98,56 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
                     grantedPermissions:(NSMutableSet *)grantedPermissions
                    declinedPermissions:(NSMutableSet *)declinedPermissions;
 
+/*!
+ @abstract Converts an object into a JSON string.
+ @param object The object to convert to JSON.
+ @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
+ @param invalidObjectHandler Handles objects that are invalid, returning a replacement value or nil to ignore.
+ @return A JSON string or nil if the object cannot be converted to JSON.
+ */
++ (NSString *)JSONStringForObject:(id)object
+                            error:(NSError *__autoreleasing *)errorRef
+             invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler;
+
+/*!
+ @abstract Adds an object to an array if it is not nil.
+ @param array The array to add the object to.
+ @param object The object to add to the array.
+ */
++ (void)array:(NSMutableArray *)array addObject:(id)object;
+
+/**
+ *  @abstract Constructs a URL
+ *
+ *  @param hostPrefix      The prefix for the host, such as 'm', 'graph', etc.
+ *  @param path            The path for the URL. This may or may not include a version
+ *  @param queryParameters The query parameters for the URL. This will be converted into a query string.
+ *  @param defaultVersion  A version to add to the URL if none is found in the path.
+ *  @param errorRef        If an error occurs, upon return contains an NSError object that describes the problem.
+ *
+ *  @return The URL.
+ */
++ (NSURL *)URLWithHostPrefix:(NSString *)hostPrefix
+                        path:(NSString *)path
+             queryParameters:(NSDictionary *)queryParameters
+              defaultVersion:(NSString *)defaultVersion
+                       error:(NSError *__autoreleasing *)errorRef;
+
+/**
+ *  @abstract Constructs an NSURL
+ *
+ *  @param scheme          The scheme for the URL.
+ *  @param host            The host for the URL.
+ *  @param path            The path for the URL.
+ *  @param queryParameters The query parameters for the URL. This will be converted into a query string.
+ *  @param errorRef        If an error occurs, upon return contains an NSError object that describes the problem.
+ *
+ *  @return The URL.
+ */
++ (NSURL *)URLWithScheme:(NSString *)scheme
+                    host:(NSString *)host
+                    path:(NSString *)path
+         queryParameters:(NSDictionary *)queryParameters
+                   error:(NSError *__autoreleasing *)errorRef;
+
 @end
