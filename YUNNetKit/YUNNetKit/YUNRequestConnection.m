@@ -21,6 +21,7 @@
 #import "YUNURLConnection.h"
 #import "YUNErrorConfiguration.h"
 #import "YUNServerConfigurationManager.h"
+#import "YUNTypeUtility.h"
 
 NSString *const YUNNonJSONResponseProperty = @"YUN11YUN_NON_JSON_RESULT";
 
@@ -391,8 +392,23 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
                          toBody:body
                     addFromData:NO
                          logger:attachmentLogger];
-        NSURL *url = [YUNInternalUtility ]
+        NSURL *url = [YUNInternalUtility URLWithHostPrefix:kURLPrefix path:nil queryParameters:nil defaultVersion:_overrideVersionPart error:NULL];
+        request = [NSMutableURLRequest requestWithURL:url
+                                          cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                      timeoutInterval:timeout];
+        [request setHTTPMethod:@"POST"];
     }
+    
+    [request setHTTPBody:[body data]];
+    NSUInteger bodyLength = [[body data] length] / 1024;
+    
+    [request setValue:[YUNRequestConnection userAgent] forHTTPHeaderField:@"User-Agent"];
+    [request setValue:[YUNRequestBody mimeContentType] forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPShouldHandleCookies:NO];
+    
+    [self logRequest:request bodyLength:bodyLength bodyLogger:bodyLogger attatchLogger:attachmentLogger];
+    
+    return request;
 }
 
 //
@@ -412,7 +428,187 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     request.parameters[@"include__headers"] = @"false";
     request.parameters[@"locale"] = [NSLocale currentLocale].localeIdentifier;
     
-    return nil;
+    NSString *baseURL;
+    if (forBatch) {
+        baseURL = request.path;
+    } else {
+        NSString *token = [self accessTokenWithRequest:request];
+        if (token) {
+            [request.parameters setValue:token forKey:kAccessTokenKey];
+            [self registerTokenToOmitFromLog:token];
+        }
+        
+        NSString *prefix = kURLPrefix;
+        // We sepcial case a post to <id>/videos and send it to network
+        // We only do this for non batch post requests
+        NSString *path = [request.path lowercaseString];
+        if ([[request.HTTPMethod uppercaseString] isEqualToString:@"POST"] &&
+            [path hasSuffix:@"/videos"]) {
+            path = [path stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
+            NSArray *components = [path componentsSeparatedByString:@"/"];
+            if ([components count] == 2) {
+                prefix = kVideoURLPrefix;
+            }
+        }
+        
+        baseURL = [[YUNInternalUtility URLWithHostPrefix:prefix path:request.path queryParameters:nil defaultVersion:nil error:NULL] absoluteString];
+    }
+    
+    NSString *url = [YUNRequest serializeURL:baseURL
+                                      params:request.parameters
+                                  httpMethod:request.HTTPMethod];
+    return url;
+}
+
+#pragma mark - Private methods (response parsing)
+- (void)completeYUNURLConnectionWithResponse:(NSURLResponse *)response
+                                        data:(NSData *)data
+                                networkError:(NSError *)error
+{
+    if (self.state != kStateCancelled) {
+        NSAssert(self.state == kStateStarted, @"Unexpected state %lu in completeWithResponse", (unsigned long)self.state);
+        self.state = kStateCompleted;
+    }
+    
+    NSArray *results = nil;
+    _URLResponse = (NSHTTPURLResponse *)response;
+    if (response) {
+        NSAssert([response isKindOfClass:[NSHTTPURLResponse class]],
+                 @"Expected NSHTTPURLResponse, got %@",
+                 response);
+        
+        NSInteger statusCode = _URLResponse.statusCode;
+        
+        if (!error && [response.MIMEType hasPrefix:@"image"]) {
+            error = [YUNError errorWithCode:YUNRequestNotTextMimeTypeReturnedErrorCode
+                                    message:@"Response is a non-text MIME type; endpoints that return images and other "
+                     @"binary data should be fetched using NSURLRequest and NSURLConnection"];
+        } else {
+            results = [self ]
+        }
+    }
+}
+
+//
+// If there is one request, the JSON is the response.
+// If there are multiple requests, the JSON has an array of dictionaries whose
+// body property is the response.
+//   [{ "code":200,
+//      "body":"JSON-response-as-a-string" },
+//    { "code":200,
+//      "body":"JSON-response-as-a-string" }]
+//
+// In both cases, this function returns an NSArray containing the results.
+// The NSArray looks just like the multiple request case except the body
+// value is converted from a string to parsed JSON.
+//
+- (NSArray *)parseJSONReponse:(NSData *)data
+                        error:(NSError **)error
+                   statusCode:(NSInteger)statusCode;
+{
+    // API can return "true" or "false", which is not valid JSON.
+    // Translate that before asking JSON parser to look at it.
+    NSString *responseUTF8 = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    id response = [self parseJSONOrOtherwise:responseUTF8 error:error];
+    
+    if (responseUTF8 == nil) {
+        NSString *base64Data = [data length] != 0 ? [data base64EncodedStringWithOptions:0] : @"";
+        if (base64Data != nil) {
+            
+#warning YUNAppEvents
+        }
+    }
+    
+    NSDictionary *responseError = nil;
+    if (!response) {
+        if ((error != NULL) && (*error == nil)) {
+            
+            
+        }
+    }
+}
+
+- (id)parseJSONOrOtherwise:(NSString *)utf8
+                     error:(NSError **)error
+{
+    id parsed = nil;
+    if (!(*error)) {
+        parsed = [YUNInternalUtility objectForJSONString:utf8 error:error];
+        // if we fail parse we attemp a reparse of a modified input to support results in the form "foo-bar", "true", etc.
+        // which is shouldn't be necessary since API v2.1
+        if (*error) {
+            // we round-trip our hand-wired response through the parser in order to remain
+            // consistent with the rest of the output of this function (note, if perf turns out
+            // to be a problem -- unlikely -- we can return the following dictionary outright)
+            NSDictionary *original = @{YUNNonJSONResponseProperty : utf8};
+            NSString *jsonrep = [YUNInternalUtility JSONStringForObject:original error:NULL invalidObjectHandler:NULL];
+            NSError *reparseError = nil;
+            parsed = [YUNInternalUtility objectForJSONString:jsonrep error:&reparseError];
+            if (!reparseError) {
+                *error = nil;
+            }
+        }
+    }
+    return parsed;
+}
+
+- (NSError *)errorFromResult:(id)result request:(YUNRequest *)request
+{
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *errorDictionary = [YUNTypeUtility dictionaryValue:result[@"data"]][@"error"];
+        
+        if (errorDictionary) {
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"code"] forKey:YUNRequestErrorGraphErrorCode];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"error_subcode"] forKey:YUNRequestErrorGraphErrorSubcode];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"error_msg"] forKey:YUNErrorDeveloperMessageKey];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"error_reason"] forKey:YUNErrorDeveloperMessageKey];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"message"] forKey:YUNErrorDeveloperMessageKey];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"error_user_title"] forKey:YUNErrorLocalizedTitleKey];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"error_user_msg"] forKey:YUNErrorLocalizedDescriptionKey];
+            [YUNInternalUtility dictionary:userInfo setObject:errorDictionary[@"error_user_msg"] forKey:NSLocalizedDescriptionKey];
+            [YUNInternalUtility dictionary:userInfo setObject:result[@"code"] forKey:YUNRequestErrorHTTPStatusCodeKey];
+            [YUNInternalUtility dictionary:userInfo setObject:result forKey:YUNRequestErrorParsedJSONResponseKey];
+            
+            YUNErrorRecoveryConfiguration *recoveryConfiguration = [g_errorConfiguration recoveryConfigurationForCode:[userInfo[YUNRequestErrorGraphErrorCode] stringValue] subcode:[userInfo[YUNRequestErrorGraphErrorSubcode] stringValue] request:request];
+            if ([errorDictionary[@"is_transient"] boolValue]) {
+                userInfo[YUNRequestErrorCategoryKey] = @(YUNRequestErrorCategoryTransient);
+            } else {
+                [YUNInternalUtility dictionary:userInfo setObject:@(recoveryConfiguration.errorCategory) forKey:YUNRequestErrorCategoryKey];
+            }
+            [YUNInternalUtility dictionary:userInfo setObject:recoveryConfiguration.localizedRecoveryDescription forKey:NSLocalizedRecoverySuggestionErrorKey];
+            [YUNInternalUtility dictionary:userInfo setObject:recoveryConfiguration.localizedRecoveryOptionDescriptions forKey:NSLocalizedRecoveryOptionsErrorKey];
+            yunerrorrecoveryatt
+        }
+    }
+}
+
+- (NSError *)errorWithCode:(YUNErrorCode)code
+                statusCode:(NSInteger)statusCode
+        parsedJSONResponse:(id)response
+                innerError:(NSError *)innerError
+                   message:(NSString *)message {
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    userInfo[YUNRequestErrorHTTPStatusCodeKey] = @(statusCode);
+    
+    if (response) {
+        userInfo[YUNRequestErrorParsedJSONResponseKey] = response;
+    }
+    
+    if (innerError) {
+        userInfo[YUNRequestErrorParsedJSONResponseKey] = innerError;
+    }
+    
+    if (message) {
+        userInfo[YUNErrorDeveloperMessageKey] = message;
+    }
+    
+    NSError *error = [[NSError alloc] initWithDomain:YUNErrorDomain
+                                                code:code
+                                            userInfo:userInfo];
+    
+    return error;
 }
 
 #pragma mark - Private methods (miscellaneous)
@@ -431,6 +627,7 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     if (!token && !(request.flags & YUNRequestFlagSkipClientToken && [YUNSettings clientToken].length > 0)) {
         return [NSString stringWithFormat:@"%@|%@", [YUNSettings appID], [YUNSettings clientToken]];
     }
+    return token;
 }
 
 - (void)registerTokenToOmitFromLog:(NSString *)token
@@ -440,12 +637,20 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     }
 }
 
-#pragma mark - Private methods (response parsing)
-- (void)completeYUNURLConnectionWithResponse:(NSURLResponse *)response
-                                        data:(NSData *)data
-                                networkError:(NSError *)error
++ (NSString *)userAgent
 {
+    static NSString *agent = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        agent = [NSString stringWithFormat:@"%@", kUserAgentBase];
+    });
     
+    if ([YUNSettings userAgentSuffix]) {
+        return [NSString stringWithFormat:@"%@/%@", agent, [YUNSettings userAgentSuffix]];
+    }
+    return agent;
 }
+
+
 
 @end

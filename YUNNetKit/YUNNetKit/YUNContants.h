@@ -135,7 +135,7 @@ extern NSString *const YUNRequestErrorParsedJSONResponseKey;
 /*!
  @abstract a formal protocol very similar to the informal protocol NSErrorRecoveryAttempting
  */
-@protocol FBSDKErrorRecoveryAttempting<NSObject>
+@protocol YUNErrorRecoveryAttempting<NSObject>
 
 /*!
  @abstract attempt the recovery

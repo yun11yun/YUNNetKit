@@ -150,4 +150,13 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
          queryParameters:(NSDictionary *)queryParameters
                    error:(NSError *__autoreleasing *)errorRef;
 
+/*!
+ @abstract Converts a JSON string into an object
+ @param string The JSON string to convert.
+ @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
+ @return An NSDictionary, NSArray, NSString or NSNumber containing the object representation, or nil if the string
+ cannot be converted.
+ */
++ (id)objectForJSONString:(NSString *)string error:(NSError *__autoreleasing *)errorRef;
+
 @end
