@@ -22,6 +22,7 @@
 #import "YUNErrorConfiguration.h"
 #import "YUNServerConfigurationManager.h"
 #import "YUNTypeUtility.h"
+#import "YUNErrorRecoveryAttempter.h"
 
 NSString *const YUNNonJSONResponseProperty = @"YUN11YUN_NON_JSON_RESULT";
 
@@ -484,9 +485,38 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
                                     message:@"Response is a non-text MIME type; endpoints that return images and other "
                      @"binary data should be fetched using NSURLRequest and NSURLConnection"];
         } else {
-            results = [self ]
+            results = [self parseJSONReponse:data
+                                       error:&error
+                                  statusCode:statusCode];
+        }
+    } else if (!error) {
+        error = [YUNError errorWithCode:YUNUnknownErrorCode
+                                message:@"Missing NSURLResponse"];
+    }
+    
+    if (!error) {
+        if ([self.requests count] != [results count]) {
+            error = [YUNError errorWithCode:YUNRequestProtocolMismatchErrorCode
+                                    message:@"Unexpected number of results returned form server."];
+        } else {
+            [_logger appendFormat:@"Response <#%lu>\nDuration: %lu msec\nSize:%lu kB\nResponse Body:\n%@\n\n",
+             (unsigned long)[_logger loggerSerialNumber],
+             [YUNInternalUtility currentTimeInMilliseconds] - _requestStartTime,
+             (unsigned long)[data length],
+             results];
         }
     }
+    
+    if (error) {
+        [_logger appendFormat:@"Response <#%lu> <Error>:\n%@\n%@\n",
+         (unsigned long)[_logger loggerSerialNumber],
+         [error localizedDescription],
+         [error userInfo]];
+    }
+    [_logger emitToNSLog];
+    
+    
+    
 }
 
 //
@@ -553,6 +583,47 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     return parsed;
 }
 
+- (void)coompleteWithResults:(NSArray *)results
+                networkError:(NSError *)networkError
+{
+    NSUInteger count = [self.requests count];
+    _expectingResults = count;
+    NSUInteger disabledRecoveryCount = 0;
+    for (YUNRequestMetadata *metadata in self.requests) {
+        if ([metadata.request isGraphErrorRecoveryDisabled]) {
+            disabledRecoveryCount++;
+        }
+    }
+    
+    [self.requests enumerateObjectsUsingBlock:^(YUNRequestMetadata *metadata, NSUInteger idx, BOOL *stop) {
+        id result = networkError ? nil : [results objectAtIndex:idx];
+        NSError *resultError = networkError ?: [self errorFromResult:result request:metadata.request];
+        
+        id body = nil;
+        if (!resultError && [result isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *resultDictionary = [YUNTypeUtility dictionaryValue:result];
+            body = [YUNTypeUtility dictionaryValue:resultDictionary[@"body"]];
+        }
+        
+        
+    }];
+}
+
+- (void)processResultBody:(NSDictionary *)body error:(NSError *)error metadata:(YUNRequestMetadata *)metadata canNotifyDelegate:(BOOL)canNotifyDelegate
+{
+    void (^finishAndInvokeCompleteHandler)(void) = ^{
+        NSDictionary *debugDict = [body objectForKey:@"__debug__"];
+        if ([debugDict isKindOfClass:[NSDictionary class]]) {
+            [self ]
+        }
+    }
+}
+
+- (void)processResultDebugDictionary:(NSDictionary *)dict
+{
+    
+}
+
 - (NSError *)errorFromResult:(id)result request:(YUNRequest *)request
 {
     if ([result isKindOfClass:[NSDictionary class]]) {
@@ -579,9 +650,17 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
             }
             [YUNInternalUtility dictionary:userInfo setObject:recoveryConfiguration.localizedRecoveryDescription forKey:NSLocalizedRecoverySuggestionErrorKey];
             [YUNInternalUtility dictionary:userInfo setObject:recoveryConfiguration.localizedRecoveryOptionDescriptions forKey:NSLocalizedRecoveryOptionsErrorKey];
-            yunerrorrecoveryatt
+            YUNErrorRecoveryAttempter *attempter = [YUNErrorRecoveryAttempter recoveryAttempterFromConfiguration:recoveryConfiguration];
+            [YUNInternalUtility dictionary:userInfo setObject:attempter forKey:NSRecoveryAttempterErrorKey];
+            
+            return [YUNError errorWithCode:YUNRequestAPIErrorCode
+                                  userInfo:userInfo
+                                   message:nil
+                           underlyingError:nil];
         }
     }
+    
+    return nil;
 }
 
 - (NSError *)errorWithCode:(YUNErrorCode)code
