@@ -515,8 +515,9 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     }
     [_logger emitToNSLog];
     
+    [self coompleteWithResults:results networkError:error];
     
-    
+    self.connection = nil;
 }
 
 //
@@ -553,10 +554,61 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     NSDictionary *responseError = nil;
     if (!response) {
         if ((error != NULL) && (*error == nil)) {
-            
-            
+            *error = [self errorWithCode:YUNUnknownErrorCode
+                              statusCode:statusCode
+                      parsedJSONResponse:nil
+                              innerError:nil
+                                 message:@"The server returned an unexpected response."];
         }
+    } else if ([self.requests count] == 1) {
+        // response is the entry, so put it in a dictioanry under "body" and add
+        // that to array of responses.
+        [results addObject:@{
+                             @"code" : @(statusCode),
+                             @"body" : response,
+                             }];
+    } else if ([response isKindOfClass:[NSArray class]]) {
+        // reponse is the array of responses, but the body element of each needs
+        // to be decoded from JSON.
+        for (id item in response) {
+            // Don't let errors parsing one response stop us from parsing another.
+            NSError *batchResultError = nil;
+            if (![item isKindOfClass:[NSDictionary class]]) {
+                [results addObject:item];
+            } else {
+                NSMutableDictionary *result = [((NSDictionary *)item) mutableCopy];
+                if (result[@"body"]) {
+                    result[@"body"] = [self parseJSONOrOtherwise:result[@"body"] error:&batchResultError];
+                }
+                [results addObject:result];
+            }
+            if (batchResultError) {
+                // We'll report back the last error we saw.
+                *error = batchResultError;
+            }
+        }
+    } else if ([response isKindOfClass:[NSDictionary class]] &&
+               (responseError = [YUNTypeUtility dictionaryValue:response[@"error"]]) != nil &&
+               [responseError[@"type"] isEqualToString:@"OAuthException"]) {
+        // if there was one request then return the only result. if there were multiple requests
+        // but only one error then server rejected the baatch access token
+        NSDictionary *result = @{
+                                 @"code" : @(statusCode),
+                                 @"body" : response,
+                                 };
+        
+        for (NSUInteger resultIndex = 0, resultCount = self.requests.count; resultIndex < resultCount; ++resultIndex) {
+            [results addObject:result];
+        }
+    } else if (error != NULL) {
+        *error = [self errorWithCode:YUNRequestProtocolMismatchErrorCode
+                          statusCode:statusCode
+                  parsedJSONResponse:results
+                          innerError:nil
+                             message:nil];
     }
+    
+    return results;
 }
 
 - (id)parseJSONOrOtherwise:(NSString *)utf8
@@ -605,8 +657,14 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
             body = [YUNTypeUtility dictionaryValue:resultDictionary[@"body"]];
         }
         
-        
+        [self processResultBody:body error:resultError metadata:metadata canNotifyDelegate:(networkError ? NO : YES)];
     }];
+    
+    if (networkError) {
+        if ([_delegate respondsToSelector:@selector(requestConnection:didFailWithError:)]) {
+            [_delegate requestConnection:self didFailWithError:networkError];
+        }
+    }
 }
 
 - (void)processResultBody:(NSDictionary *)body error:(NSError *)error metadata:(YUNRequestMetadata *)metadata canNotifyDelegate:(BOOL)canNotifyDelegate
@@ -614,14 +672,47 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     void (^finishAndInvokeCompleteHandler)(void) = ^{
         NSDictionary *debugDict = [body objectForKey:@"__debug__"];
         if ([debugDict isKindOfClass:[NSDictionary class]]) {
-            [self ]
+            [self processResultDebugDictionary: debugDict];
         }
-    }
+        [metadata invokeCompletionHnadlerConnection:self withResults:body error:error];
+        
+        if (--_expectingResults == 0) {
+            if (canNotifyDelegate && [_delegate respondsToSelector:@selector(requestConnectionDidFinishLoading:)]) {
+                [_delegate requestConnectionDidFinishLoading:self];
+            }
+        }
+    };
+    
+    // this is already on the queue since we are currently in the NSURLConnection callback.
+    finishAndInvokeCompleteHandler();
 }
 
 - (void)processResultDebugDictionary:(NSDictionary *)dict
 {
+    NSArray *messages = [YUNTypeUtility arrayValue:dict[@"messages"]];
+    if (![messages count]) {
+        return;
+    }
     
+    [messages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSDictionary *messageDict = [YUNTypeUtility dictionaryValue:obj];
+        NSString *message = [YUNTypeUtility stringValue:messageDict[@"message"]];
+        NSString *type = [YUNTypeUtility stringValue:messageDict[@"type"]];
+        NSString *link = [YUNTypeUtility stringValue:messageDict[@"link"]];
+        if (!message || !type) {
+            return ;
+        }
+        
+        NSString *loggingBehavior = YUNLoggingBehaviorGraphAPIDebugInfo;
+        if ([type isEqualToString:@"warning"]) {
+            loggingBehavior = YUNLoggingBehaviorGraphAPIDebugWarning;
+        }
+        if (link) {
+            message = [message stringByAppendingFormat:@" Link: %@", link];
+        }
+        
+        [YUNLogger singleShotLogEntry:loggingBehavior logEntry:message];
+    }];
 }
 
 - (NSError *)errorFromResult:(id)result request:(YUNRequest *)request
@@ -694,10 +785,32 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
 
 - (void)logRequest:(NSMutableURLRequest *)request
         bodyLength:(NSUInteger)bodyLength
-        bodyLogger:(YUNLogger *)bogyLogger
+        bodyLogger:(YUNLogger *)bodyLogger
      attatchLogger:(YUNLogger *)attachmentLogger
 {
-    
+    if (_logger.isActive) {
+        [_logger appendFormat:@"Request <#%lu>:\n", (unsigned long)_logger.loggerSerialNumber];
+        [_logger appendKey:@"URL" value:[[request URL] absoluteString]];
+        [_logger appendKey:@"Method" value:[request HTTPMethod]];
+        [_logger appendKey:@"UserAgent" value:[request valueForHTTPHeaderField:@"User-Agent"]];
+        [_logger appendKey:@"MIME" value:[request valueForHTTPHeaderField:@"Content-Type"]];
+        
+        if (bodyLength != 0) {
+            [_logger appendKey:@"Body Size" value:[NSString stringWithFormat:@"%lu kB", (unsigned long)bodyLength / 1024]];
+        }
+        
+        if (bodyLogger != nil) {
+            [_logger appendKey:@"Body (w/o attachments)" value:bodyLogger.contents];
+        }
+        
+        if (attachmentLogger != nil) {
+            [_logger appendKey:@"Attachments" value:attachmentLogger.contents];
+        }
+        
+        [_logger appendString:@"\n"];
+        
+        [_logger emitToNSLog];
+    }
 }
 
 - (NSString *)accessTokenWithRequest:(YUNRequest *)request
@@ -728,6 +841,52 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
         return [NSString stringWithFormat:@"%@/%@", agent, [YUNSettings userAgentSuffix]];
     }
     return agent;
+}
+
+- (void)setConnection:(YUNURLConnection *)connection
+{
+    if (_connection != connection) {
+        _connection.delegate = nil;
+        _connection = connection;
+    }
+}
+
+#pragma mark - YUNURLConnectionDelegate
+
+- (void)URLConnection:(YUNURLConnection *)connection
+      didSendBodyData:(NSInteger)bytesWritten
+    totalBytesWritten:(NSInteger)totalBytesWritten
+totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+    id<YUNRequestConnectionDelegate> delegate = [self delegate];
+    
+    if ([delegate respondsToSelector:@selector(requestConnection:didSendBodyData:totalBytesWritten:totalBytesExpectedToWrite:)]) {
+        [delegate requestConnection:self
+                    didSendBodyData:bytesWritten
+                  totalBytesWritten:totalBytesWritten
+          totalBytesExpectedToWrite:totalBytesExpectedToWrite];
+    }
+}
+
+#pragma mark - Debugging helpers
+
+- (NSString *)description
+{
+    NSMutableString *result = [NSMutableString stringWithFormat:@"<%@: %p, %lu request(s): (\n",
+                               NSStringFromClass([self class]),
+                               self,
+                               (unsigned long)self.requests.count];
+    BOOL comma = NO;
+    for (YUNRequestMetadata *metadata in self.requests) {
+        YUNRequest *request = metadata.request;
+        if (comma) {
+            [result appendString:@",\n"];
+        }
+        [result appendString:[request description]];
+        comma = YES;
+    }
+    [result appendString:@"\n)>"];
+    return result;
 }
 
 
