@@ -25,6 +25,8 @@
 		C2613DC71CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C2613DC51CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h */; };
 		C2613DC81CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C2613DC61CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m */; };
 		C2613DCB1CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C2613DC91CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h */; };
+		C26140081CF46CF300230049 /* YUNPaymentObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C26140061CF46CF300230049 /* YUNPaymentObserver.h */; };
+		C26140091CF46CF300230049 /* YUNPaymentObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C26140071CF46CF300230049 /* YUNPaymentObserver.m */; };
 		C26559181CEB2EE700CF82EE /* YUNErrorRecoveryAttempter.h in Headers */ = {isa = PBXBuildFile; fileRef = C26559161CEB2EE700CF82EE /* YUNErrorRecoveryAttempter.h */; };
 		C26559191CEB2EE700CF82EE /* YUNErrorRecoveryAttempter.m in Sources */ = {isa = PBXBuildFile; fileRef = C26559171CEB2EE700CF82EE /* YUNErrorRecoveryAttempter.m */; };
 		C26559201CEB302E00CF82EE /* _YUNTemporaryErrorRecoveryAttempter.h in Headers */ = {isa = PBXBuildFile; fileRef = C265591E1CEB302E00CF82EE /* _YUNTemporaryErrorRecoveryAttempter.h */; };
@@ -121,6 +123,8 @@
 		C2613DC51CDCA0C900D1DBA4 /* YUNServerConfigurationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNServerConfigurationManager.h; sourceTree = "<group>"; };
 		C2613DC61CDCA0C900D1DBA4 /* YUNServerConfigurationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNServerConfigurationManager.m; sourceTree = "<group>"; };
 		C2613DC91CDCA33700D1DBA4 /* YUNServerConfigurationManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNServerConfigurationManager+Internal.h"; sourceTree = "<group>"; };
+		C26140061CF46CF300230049 /* YUNPaymentObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNPaymentObserver.h; sourceTree = "<group>"; };
+		C26140071CF46CF300230049 /* YUNPaymentObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNPaymentObserver.m; sourceTree = "<group>"; };
 		C26559161CEB2EE700CF82EE /* YUNErrorRecoveryAttempter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNErrorRecoveryAttempter.h; sourceTree = "<group>"; };
 		C26559171CEB2EE700CF82EE /* YUNErrorRecoveryAttempter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNErrorRecoveryAttempter.m; sourceTree = "<group>"; };
 		C265591E1CEB302E00CF82EE /* _YUNTemporaryErrorRecoveryAttempter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _YUNTemporaryErrorRecoveryAttempter.h; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 				C27E2A6E1CF2991D00B033E2 /* YUNAppEvents+Internal.m */,
 				C27E2A691CF297E700B033E2 /* YUNAppEventsDeviceInfo.h */,
 				C27E2A6A1CF297E700B033E2 /* YUNAppEventsDeviceInfo.m */,
+				C26140061CF46CF300230049 /* YUNPaymentObserver.h */,
+				C26140071CF46CF300230049 /* YUNPaymentObserver.m */,
 			);
 			name = AppEvent;
 			sourceTree = "<group>";
@@ -385,6 +391,7 @@
 				FABFA3C41CD106CA00B4505E /* YUNSettings.h in Headers */,
 				C26559201CEB302E00CF82EE /* _YUNTemporaryErrorRecoveryAttempter.h in Headers */,
 				FAE1DAC61CDF7CC7007355F2 /* YUNAccessTokenCaching.h in Headers */,
+				C26140081CF46CF300230049 /* YUNPaymentObserver.h in Headers */,
 				C258BA161CE5D69E0051D33B /* YUNRequestConnection+Internal.h in Headers */,
 				FAB34E721CD2603E00F3C961 /* YUNTypeUtility.h in Headers */,
 				FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */,
@@ -548,6 +555,7 @@
 				C258B9FB1CE5ACC90051D33B /* YUNAccessTokenCacheV3_21.m in Sources */,
 				FAE0417B1CDF81A300C19565 /* YUNAccessTokenCacheV4.m in Sources */,
 				C26559211CEB302E00CF82EE /* _YUNTemporaryErrorRecoveryAttempter.m in Sources */,
+				C26140091CF46CF300230049 /* YUNPaymentObserver.m in Sources */,
 				FAB34E6F1CD25FDC00F3C961 /* YUNError.m in Sources */,
 				FAE6EC811CCFAB31003F9619 /* YUNAccessToken.m in Sources */,
 				FAB34E651CD2561700F3C961 /* YUNRequestDataAttachment.m in Sources */,
