@@ -358,4 +358,19 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
     return [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:errorRef];
 }
 
++ (NSDictionary *)dictionaryFromFBURL:(NSURL *)url
+{
+    // version 3.2.3 of the Facebook app encodes the parameters in the query but
+    // version 3.3 and above encode the parameters in the fragment;
+    // merge them together with fragment taking priority.
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params addEntriesFromDictionary:[YUNUtility dictionaryWithQueryString:url.query]];
+    
+    // Only get the params from the fragment if it has authorize as the host
+    if ([url.host isEqualToString:@"authorize"]) {
+        [params addEntriesFromDictionary:[YUNUtility dictionaryWithQueryString:url.fragment]];
+    }
+    return params;
+}
+
 @end

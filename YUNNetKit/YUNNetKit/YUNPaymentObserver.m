@@ -158,4 +158,103 @@ static NSMutableArray *g_pendingRequestors;
     [self.productReqeust start];
 }
 
+- (NSString *)getTruncatedString:(NSString *)inputString
+{
+    if (!inputString) {
+        return @"";
+    }
+    
+    return [inputString length] <= YUNMaxParameterValueLength ? inputString : [inputString substringFromIndex:YUNMaxParameterValueLength];
+}
+
+- (void)logTransationEvent:(SKProduct *)product
+{
+    NSString *eventName = nil;
+    NSString *transactionID = nil;
+    switch (self.transaction.transactionState) {
+        case SKPaymentTransactionStatePurchasing:
+            eventName = YUNAppEventNameInitiatedCheckout;
+            break;
+        case SKPaymentTransactionStatePurchased:
+            eventName = YUNAppEventNamePurchased;
+            break;
+        case SKPaymentTransactionStateFailed:
+            eventName = YUNAppEventNamePurchaseFailed;
+            break;
+        case SKPaymentTransactionStateDeferred:
+        case SKPaymentTransactionStateRestored:
+            return;
+    }
+    if (!eventName) {
+        [YUNLogger singleShotLogEntry:YUNLoggingBehaviorAppEvents
+                         formatString:@"YUNPaymentObserver logTransactionEvent: event name cannot be nil"];
+        return;
+    }
+    
+    SKPayment *payment = self.transaction.payment;
+    NSMutableDictionary *eventParameters = [NSMutableDictionary dictionaryWithDictionary:@{YUNAppEventParameterNameContentID : payment.productIdentifier ?: @"", YUNAppEventParameterNameNumItems : @(payment.quantity),}];
+    double totalAmount = 0;
+    if (product) {
+        totalAmount = payment.quantity * product.price.doubleValue;
+        [eventParameters addEntriesFromDictionary: @{YUNAppEventParameterNameCurrency: [product.priceLocale objectForKey:NSLocaleCurrencyCode],YUNAppEventParameterNameNumItems: @(payment.quantity),YUNAppEventParameterNameProductTitle: [self getTruncatedString:product.localizedTitle],YUNAppEventParameterNameDescription: [self getTruncatedString:product.localizedDescription],}];
+        if (transactionID) {
+            [eventParameters setObject:transactionID forKey:YUNAppEventParameterNameTransactionID];
+        }
+    }
+    
+    [self logImplicitPurchaseEvent:eventName
+                        valueToSum:totalAmount
+                        parameters:eventParameters];
+}
+
+- (void)productsRequest:(SKProductsRequest *)request
+     didReceiveResponse:(SKProductsResponse *)response
+{
+    NSArray *products = response.products;
+    NSArray *invalidProductIdentifiers = response.invalidProductIdentifiers;
+    if (products.count + invalidProductIdentifiers.count != 1) {
+        [YUNLogger singleShotLogEntry:YUNLoggingBehaviorAppEvents
+                         formatString:@"YUNPaymentObserver: Expect to resolve one product per request"];
+    }
+    SKProduct *product = nil;
+    if (products.count) {
+        product = products[0];
+    }
+    [self logTransationEvent:product];
+}
+
+- (void)requestDidFinish:(SKRequest *)request
+{
+    [self cleanUp];
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error
+{
+    [self logTransationEvent:nil];
+    [self cleanUp];
+}
+
+- (void)cleanUp
+{
+    @synchronized(g_pendingRequestors) {
+        [g_pendingRequestors removeObject:self];
+    }
+}
+
+- (void)logImplicitPurchaseEvent:(NSString *)eventName
+                      valueToSum:(double)valueToSum
+                      parameters:(NSDictionary *)parameters {
+    NSMutableDictionary *eventParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [eventParameters setObject:@"1" forKey:YUNAppEventParameterImplicitlyLoggerPurchase];
+    [YUNAppEvents logEvent:eventName
+                valueToSum:valueToSum
+                parameters:parameters];
+    
+    // Unless the behavior is set to only allow explicit flushing, we go ahead and flush, since purchase events
+    // are relatively rare and relatively high value and worth getting across on wire right away.
+    if ([YUNAppEvents flushBehavior] != YUNAppEventsFlushBehaviorExplicitOnly) {
+        [[YUNAppEvents singleton] flushForReason:YUNAppEventsFlushReasonEagerlyFlushingEvent];
+    }
+}
+
 @end

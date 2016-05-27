@@ -159,4 +159,19 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
  */
 + (id)objectForJSONString:(NSString *)string error:(NSError *__autoreleasing *)errorRef;
 
+/*!
+ @abstract Parses an FB url's query params (and potentially fragment) into a dictionary.
+ @param url The FB url.
+ @return A dictionary with the key/value pairs.
+ */
++ (NSDictionary *)dictionaryFromFBURL:(NSURL *)url;
+
+#define YUNConditionalLog(condition, loggingBehavior, desc, ...) \
+{ \
+if (!(condition)) { \
+NSString *msg = [NSString stringWithFormat:(desc), ##__VA_ARGS__]; \
+[FBSDKLogger singleShotLogEntry:loggingBehavior logEntry:msg]; \
+} \
+}
+
 @end

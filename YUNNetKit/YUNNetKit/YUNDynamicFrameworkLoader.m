@@ -374,21 +374,21 @@ typedef CATransform3D (*CATransform3DMakeScale_type)(CGFloat, CGFloat, CGFloat);
 typedef CATransform3D (*CATransform3DMakeTranslation_type)(CGFloat, CGFloat, CGFloat);
 typedef CATransform3D (*CATransform3DConcat_type)(CATransform3D, CATransform3D);
 
-const CATransform3D fbsdkdfl_CATransform3DIdentity = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+const CATransform3D yundfl_CATransform3DIdentity = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 
-CATransform3D fbsdkdfl_CATransform3DMakeScale(CGFloat sx, CGFloat sy, CGFloat sz)
+CATransform3D yundfl_CATransform3DMakeScale(CGFloat sx, CGFloat sy, CGFloat sz)
 {
     _yundfl_QuartzCore_get_f(CATransform3DMakeScale);
     return f(sx, sy, sz);
 }
 
-CATransform3D fbsdkdfl_CATransform3DMakeTranslation(CGFloat tx, CGFloat ty, CGFloat tz)
+CATransform3D yundfl_CATransform3DMakeTranslation(CGFloat tx, CGFloat ty, CGFloat tz)
 {
     _yundfl_QuartzCore_get_f(CATransform3DMakeTranslation);
     return f(tx, ty, tz);
 }
 
-CATransform3D fbsdkdfl_CATransform3DConcat(CATransform3D a, CATransform3D b)
+CATransform3D yundfl_CATransform3DConcat(CATransform3D a, CATransform3D b)
 {
     _yundfl_QuartzCore_get_f(CATransform3DConcat);
     return f(a, b);
@@ -405,19 +405,19 @@ typedef OSStatus (*AudioServicesCreateSystemSoundID_type)(CFURLRef, SystemSoundI
 typedef OSStatus (*AudioServicesDisposeSystemSoundID_type)(SystemSoundID);
 typedef void (*AudioServicesPlaySystemSound_type)(SystemSoundID);
 
-OSStatus fbsdkdfl_AudioServicesCreateSystemSoundID(CFURLRef inFileURL, SystemSoundID *outSystemSoundID)
+OSStatus yundfl_AudioServicesCreateSystemSoundID(CFURLRef inFileURL, SystemSoundID *outSystemSoundID)
 {
     _yundfl_AudioToolbox_get_f(AudioServicesCreateSystemSoundID);
     return f(inFileURL, outSystemSoundID);
 }
 
-OSStatus fbsdkdfl_AudioServicesDisposeSystemSoundID(SystemSoundID inSystemSoundID)
+OSStatus yundfl_AudioServicesDisposeSystemSoundID(SystemSoundID inSystemSoundID)
 {
     _yundfl_AudioToolbox_get_f(AudioServicesDisposeSystemSoundID);
     return f(inSystemSoundID);
 }
 
-void fbsdkdfl_AudioServicesPlaySystemSound(SystemSoundID inSystemSoundID)
+void yundfl_AudioServicesPlaySystemSound(SystemSoundID inSystemSoundID)
 {
     _yundfl_AudioToolbox_get_f(AudioServicesPlaySystemSound);
     return f(inSystemSoundID);
@@ -430,7 +430,7 @@ _yundfl_handle_get_impl_(AdSupport)
 
 #define _yundfl_AdSupport_get_c(SYMBOL) _yundfl_symbol_get_c(AdSupport, SYMBOL);
 
-Class fbsdkdfl_ASIdentifierManagerClass(void)
+Class yundfl_ASIdentifierManagerClass(void)
 {
     _yundfl_AdSupport_get_c(ASIdentifierManager);
     return c;
@@ -465,22 +465,22 @@ NSString *yundfl_ACFacebookAudienceEveryone(void)
     _yundfl_Accounts_get_and_return_NSString(ACFacebookAudienceEveryone);
 }
 
-NSString *fbsdkdfl_ACFacebookAudienceFriends(void)
+NSString *yundfl_ACFacebookAudienceFriends(void)
 {
     _yundfl_Accounts_get_and_return_NSString(ACFacebookAudienceFriends);
 }
 
-NSString *fbsdkdfl_ACFacebookAudienceKey(void)
+NSString *yundfl_ACFacebookAudienceKey(void)
 {
     _yundfl_Accounts_get_and_return_NSString(ACFacebookAudienceKey);
 }
 
-NSString *fbsdkdfl_ACFacebookAudienceOnlyMe(void)
+NSString *yundfl_ACFacebookAudienceOnlyMe(void)
 {
     _yundfl_Accounts_get_and_return_NSString(ACFacebookAudienceOnlyMe);
 }
 
-NSString *fbsdkdfl_ACFacebookPermissionsKey(void)
+NSString *yundfl_ACFacebookPermissionsKey(void)
 {
     _yundfl_Accounts_get_and_return_NSString(ACFacebookPermissionsKey);
 }
@@ -489,7 +489,7 @@ NSString *fbsdkdfl_ACFacebookPermissionsKey(void)
 
 #define _yundfl_Accounts_get_c(SYMBOL) _yundfl_symbol_get_c(Accounts, SYMBOL);
 
-Class fbsdkdfl_ACAccountStoreClass(void)
+Class yundfl_ACAccountStoreClass(void)
 {
     _yundfl_Accounts_get_c(ACAccountStore);
     return c;
@@ -502,13 +502,13 @@ _yundfl_handle_get_impl_(StoreKit)
 
 #define _yundfl_StoreKit_get_c(SYMBOL) _yundfl_symbol_get_c(StoreKit, SYMBOL);
 
-Class fbsdkdfl_SKPaymentQueueClass(void)
+Class yundfl_SKPaymentQueueClass(void)
 {
     _yundfl_StoreKit_get_c(SKPaymentQueue);
     return c;
 }
 
-Class fbsdkdfl_SKProductsRequestClass(void)
+Class yundfl_SKProductsRequestClass(void)
 {
     _yundfl_StoreKit_get_c(SKProductsRequest);
     return c;

@@ -204,7 +204,7 @@ extern NSString *const YUNAppEventParameterValueNo;
  @param accessToken  The optional access token to log the event as.
  */
 + (void)logEvent:(NSString *)eventName
-      valueToSum:(double)valueToSum
+      valueToSum:(NSNumber *)valueToSum
       parameters:(NSDictionary *)parameters
      accessToken:(YUNAccessToken *)accessToken;
 
