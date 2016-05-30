@@ -21,21 +21,54 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
 @interface YUNInternalUtility : NSObject
 
 /*!
- @abstract Sets an object for a key in a dictionary if it is not nil.
- @param dictionary The dictionary to set the value for.
- @param object The value to set.
- @param key The key to set the value for.
+ @abstract Constructs the scheme for apps that come to the current app through the bridge.
  */
-+ (void)dictionary:(NSMutableDictionary *)dictionary setObject:(id)object forKey:(id<NSCopying>)key;
++ (NSString *)appURLScheme;
+
+/**
+ *  Constructs an URL for the current app.
+ *
+ *  @param host            The host for URL
+ *  @param path            The path for the URL
+ *  @param queryParameters The query parameters for the URL, This will be converted into a query string.
+ *  @param errorRef        If an error occurs, upon return contains an NSError object that descrobes the problem.
+ *
+ *  @return The app URL
+ */
++ (NSURL *)appURLWithHost:(NSString *)host
+                     path:(NSString *)path
+          queryParameters:(NSDictionary *)queryParameters
+                    error:(NSError *__autoreleasing *)errorRef;
+
+/**
+ *  Parses an url's query params (and potentially fragment) into a dictionary
+ *
+ *  @param url The url
+ *
+ *  @return A dictionary with the key/value pairs.
+ */
++ (NSDictionary *)dictionaryFromURL:(NSURL *)url;
 
 /*!
- @abstract Checks equality between 2 objects.
- @discussion Checks for pointer equality, nils, isEqual:.
- @param object The first object to compare.
- @param other The second object to compare.
- @result YES if the objects are equal, otherwise NO.
+ @abstract Adds an object to an array if it is not nil.
+ @param array The array to add the object to.
+ @param object The object to add to the array.
  */
-+ (BOOL)object:(id)object isEqualToObject:(id)other;
++ (void)array:(NSMutableArray *)array addObject:(id)object;
+
+/*!
+ @abstract Returns bundle for returning localized strings
+ @discussion We assume a convention of a bundle named FBSDKStrings.bundle, otherwise we
+ return the main bundle.
+ */
++ (NSBundle *)bundleForStrings;
+
+/*!
+ @abstract Converts simple value types to the string equivelant for serializing to a request query or body.
+ @param value The value to be converted.
+ @return The value that may have been converted if able (otherwise the input param).
+ */
++ (id)convertRequestValue:(id)value;
 
 /*!
  @abstract Gets the milliseconds since the Unix Epoch.
@@ -43,6 +76,69 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
  @return The number of milliseconds since the Unix Epoch.
  */
 + (unsigned long)currentTimeInMilliseconds;
+
+/**
+ *  Sets an object for a key in a dictionary if it is not nil.
+ *
+ *  @param dictionary The dictionary to set the value for.
+ *  @param object     The value to set after serializing to JSON.
+ *  @param key        The key to set the value for.
+ *  @param errorRef   If an error occurs, upon return contains an NSError object that describes the problem.
+ *
+ *  @return NO if an error occurred while serializing the object, otherwise YES.
+ */
++ (BOOL)dictionary:(NSMutableDictionary *)dictionary
+setJSONStringForObject:(id)object
+            forKey:(id<NSCopying>)key
+             error:(NSError *__autoreleasing *)errorRef;
+
+/*!
+ @abstract Sets an object for a key in a dictionary if it is not nil.
+ @param dictionary The dictionary to set the value for.
+ @param object The value to set.
+ @param key The key to set the value for.
+ */
++ (void)dictionary:(NSMutableDictionary *)dictionary setObject:(id)object forKey:(id<NSCopying>)key;
+
+
+/*!
+ @abstract Constructs a URL.
+ @param hostPrefix The prefix for the host, such as 'm', 'graph', etc.
+ @param path The path for the URL.  This may or may not include a version.
+ @param queryParameters The query parameters for the URL.  This will be converted into a query string.
+ @param defaultVersion A version to add to the URL if none is found in the path.
+ @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
+ @return The Facebook URL.
+ */
++ (NSURL *)URLWithHostPrefix:(NSString *)hostPrefix
+                        path:(NSString *)path
+             queryParameters:(NSDictionary *)queryParameters
+              defaultVersion:(NSString *)defaultVersion
+                       error:(NSError *__autoreleasing *)errorRef;
+
+/*!
+ @abstract Constructs an NSURL.
+ @param scheme The scheme for the URL.
+ @param host The host for the URL.
+ @param path The path for the URL.
+ @param queryParameters The query parameters for the URL.  This will be converted into a query string.
+ @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
+ @return The URL.
+ */
++ (NSURL *)URLWithScheme:(NSString *)scheme
+                    host:(NSString *)host
+                    path:(NSString *)path
+         queryParameters:(NSDictionary *)queryParameters
+                   error:(NSError *__autoreleasing *)errorRef;
+
+/**
+ *  Tests whether the supplied URL is valid URL for opening in the browser.
+ *
+ *  @param URL The URL to test.
+ *
+ *  @return YES if the URL refers to an http or https resource, otherwise NO.
+ */
++ (BOOL)isBrowserURL:(NSURL *)URL;
 
 /*!
  @abstract Tests whether the operating system is at least the specified version.
@@ -64,41 +160,6 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
 + (NSOperatingSystemVersion)operatingSystemVersion;
 
 /*!
- @abstract Constructs a query string from a dictionary.
- @param dictionary The dictionary with key/value pairs for the query string.
- @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
- @param invalidObjectHandler Handles objects that are invalid, returning a replacement value or nil to ignore.
- @result Query string representation of the parameters.
- */
-+ (NSString *)queryStringWithDictionary:(NSDictionary *)dictionary
-                                  error:(NSError *__autoreleasing *)errorRef
-                   invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler;
-
-/*!
- @abstract Converts simple value types to the string equivelant for serializing to a request query or body.
- @param value The value to be converted.
- @return The value that may have been converted if able (otherwise the input param).
- */
-+ (id)convertRequestValue:(id)value;
-
-/*!
- @abstract Returns bundle for returning localized strings
- @discussion We assume a convention of a bundle named FBSDKStrings.bundle, otherwise we
- return the main bundle.
- */
-+ (NSBundle *)bundleForStrings;
-
-/*!
- @abstract Extracts permissions from a response fetched from me/permissions
- @param responseObject the response
- @param grantedPermissions the set to add granted permissions to
- @param declinedPermissions the set to add decliend permissions to.
- */
-+ (void)extractPermissionsFromResponse:(NSDictionary *)responseObject
-                    grantedPermissions:(NSMutableSet *)grantedPermissions
-                   declinedPermissions:(NSMutableSet *)declinedPermissions;
-
-/*!
  @abstract Converts an object into a JSON string.
  @param object The object to convert to JSON.
  @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
@@ -110,45 +171,13 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
              invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler;
 
 /*!
- @abstract Adds an object to an array if it is not nil.
- @param array The array to add the object to.
- @param object The object to add to the array.
+ @abstract Checks equality between 2 objects.
+ @discussion Checks for pointer equality, nils, isEqual:.
+ @param object The first object to compare.
+ @param other The second object to compare.
+ @result YES if the objects are equal, otherwise NO.
  */
-+ (void)array:(NSMutableArray *)array addObject:(id)object;
-
-/**
- *  @abstract Constructs a URL
- *
- *  @param hostPrefix      The prefix for the host, such as 'm', 'graph', etc.
- *  @param path            The path for the URL. This may or may not include a version
- *  @param queryParameters The query parameters for the URL. This will be converted into a query string.
- *  @param defaultVersion  A version to add to the URL if none is found in the path.
- *  @param errorRef        If an error occurs, upon return contains an NSError object that describes the problem.
- *
- *  @return The URL.
- */
-+ (NSURL *)URLWithHostPrefix:(NSString *)hostPrefix
-                        path:(NSString *)path
-             queryParameters:(NSDictionary *)queryParameters
-              defaultVersion:(NSString *)defaultVersion
-                       error:(NSError *__autoreleasing *)errorRef;
-
-/**
- *  @abstract Constructs an NSURL
- *
- *  @param scheme          The scheme for the URL.
- *  @param host            The host for the URL.
- *  @param path            The path for the URL.
- *  @param queryParameters The query parameters for the URL. This will be converted into a query string.
- *  @param errorRef        If an error occurs, upon return contains an NSError object that describes the problem.
- *
- *  @return The URL.
- */
-+ (NSURL *)URLWithScheme:(NSString *)scheme
-                    host:(NSString *)host
-                    path:(NSString *)path
-         queryParameters:(NSDictionary *)queryParameters
-                   error:(NSError *__autoreleasing *)errorRef;
++ (BOOL)object:(id)object isEqualToObject:(id)other;
 
 /*!
  @abstract Converts a JSON string into an object
@@ -160,11 +189,31 @@ typedef NS_ENUM(int32_t, FBSDKUIKitVersion)
 + (id)objectForJSONString:(NSString *)string error:(NSError *__autoreleasing *)errorRef;
 
 /*!
- @abstract Parses an FB url's query params (and potentially fragment) into a dictionary.
- @param url The FB url.
- @return A dictionary with the key/value pairs.
+ @abstract Constructs a query string from a dictionary.
+ @param dictionary The dictionary with key/value pairs for the query string.
+ @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
+ @param invalidObjectHandler Handles objects that are invalid, returning a replacement value or nil to ignore.
+ @result Query string representation of the parameters.
  */
-+ (NSDictionary *)dictionaryFromFBURL:(NSURL *)url;
++ (NSString *)queryStringWithDictionary:(NSDictionary *)dictionary
+                                  error:(NSError *__autoreleasing *)errorRef
+                   invalidObjectHandler:(id(^)(id object, BOOL *stop))invalidObjectHandler;
+
+/*!
+ @abstract Extracts permissions from a response fetched from me/permissions
+ @param responseObject the response
+ @param grantedPermissions the set to add granted permissions to
+ @param declinedPermissions the set to add decliend permissions to.
+ */
++ (void)extractPermissionsFromResponse:(NSDictionary *)responseObject
+                    grantedPermissions:(NSMutableSet *)grantedPermissions
+                   declinedPermissions:(NSMutableSet *)declinedPermissions;
+
+/**
+ @abstract Attempts to find the first UIViewController in the view's responder chain. Returns nil if not found.
+ */
++ (UIViewController *)viewControllerForView:(UIView *)view;
+
 
 #define YUNConditionalLog(condition, loggingBehavior, desc, ...) \
 { \

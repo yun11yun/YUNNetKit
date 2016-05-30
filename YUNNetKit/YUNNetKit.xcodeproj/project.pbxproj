@@ -53,6 +53,12 @@
 		C28B9FFC1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C28B9FFA1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h */; };
 		C29714581CE349AB004DC77E /* YUNKeychainStore.h in Headers */ = {isa = PBXBuildFile; fileRef = C29714561CE349AB004DC77E /* YUNKeychainStore.h */; };
 		C29714591CE349AB004DC77E /* YUNKeychainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C29714571CE349AB004DC77E /* YUNKeychainStore.m */; };
+		C2B5BBC31CFBE9980054BE7C /* YUNInternalUtilityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BBC21CFBE9980054BE7C /* YUNInternalUtilityTest.m */; };
+		C2B5BBC51CFBEEBC0054BE7C /* YUNUitlityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BBC41CFBEEBC0054BE7C /* YUNUitlityTest.m */; };
+		C2B5BC311CFC4D0F0054BE7C /* YUNDynamicFrameworkLoaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BC301CFC4D0F0054BE7C /* YUNDynamicFrameworkLoaderTest.m */; };
+		C2B5BC351CFC50F40054BE7C /* YUNCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = C2B5BC331CFC50F40054BE7C /* YUNCrypto.h */; };
+		C2B5BC361CFC50F40054BE7C /* YUNCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BC341CFC50F40054BE7C /* YUNCrypto.m */; };
+		C2B5BC3B1CFC526A0054BE7C /* YUNCryptoTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BC3A1CFC526A0054BE7C /* YUNCryptoTest.m */; };
 		FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */; };
 		FAB34E601CD2558C00F3C961 /* YUNRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */; };
 		FAB34E611CD2558C00F3C961 /* YUNRequestConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */; };
@@ -156,6 +162,12 @@
 		C28B9FFA1CDC76F50085A3C9 /* YUNServerConfiguration+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNServerConfiguration+Internal.h"; sourceTree = "<group>"; };
 		C29714561CE349AB004DC77E /* YUNKeychainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNKeychainStore.h; sourceTree = "<group>"; };
 		C29714571CE349AB004DC77E /* YUNKeychainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNKeychainStore.m; sourceTree = "<group>"; };
+		C2B5BBC21CFBE9980054BE7C /* YUNInternalUtilityTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNInternalUtilityTest.m; sourceTree = "<group>"; };
+		C2B5BBC41CFBEEBC0054BE7C /* YUNUitlityTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNUitlityTest.m; sourceTree = "<group>"; };
+		C2B5BC301CFC4D0F0054BE7C /* YUNDynamicFrameworkLoaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNDynamicFrameworkLoaderTest.m; sourceTree = "<group>"; };
+		C2B5BC331CFC50F40054BE7C /* YUNCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNCrypto.h; sourceTree = "<group>"; };
+		C2B5BC341CFC50F40054BE7C /* YUNCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNCrypto.m; sourceTree = "<group>"; };
+		C2B5BC3A1CFC526A0054BE7C /* YUNCryptoTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNCryptoTest.m; sourceTree = "<group>"; };
 		FAB34E5A1CD2423800F3C961 /* YUNSettings+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YUNSettings+Internal.h"; sourceTree = "<group>"; };
 		FAB34E5E1CD2558C00F3C961 /* YUNRequestConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNRequestConnection.h; sourceTree = "<group>"; };
 		FAB34E5F1CD2558C00F3C961 /* YUNRequestConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNRequestConnection.m; sourceTree = "<group>"; };
@@ -274,6 +286,15 @@
 			name = AppEvent;
 			sourceTree = "<group>";
 		};
+		C2B5BC321CFC50DB0054BE7C /* Cryptography */ = {
+			isa = PBXGroup;
+			children = (
+				C2B5BC331CFC50F40054BE7C /* YUNCrypto.h */,
+				C2B5BC341CFC50F40054BE7C /* YUNCrypto.m */,
+			);
+			name = Cryptography;
+			sourceTree = "<group>";
+		};
 		FA74EA031CDF5516007CAB83 /* TokenCaching */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +390,7 @@
 				FAB34E751CD2612500F3C961 /* YUNContants.m */,
 				C253C1AE1CDAD4FD00F6FA5E /* YUNUtility.h */,
 				C253C1AF1CDAD4FD00F6FA5E /* YUNUtility.m */,
+				C2B5BC321CFC50DB0054BE7C /* Cryptography */,
 				C27E2A641CF294F800B033E2 /* AppEvent */,
 				C26559151CEB2E9C00CF82EE /* ErrorRecovery */,
 				FAE0417C1CDF835200C19565 /* Internal_NoARC */,
@@ -389,7 +411,11 @@
 				FAE6EC731CCFAAD4003F9619 /* YUNNetKitTests.m */,
 				FAB34E6A1CD25B1E00F3C961 /* YUNRequestBodyTests.m */,
 				FAE6EC8E1CCFB6F9003F9619 /* YUNAccessTokenTests.m */,
+				C2B5BBC21CFBE9980054BE7C /* YUNInternalUtilityTest.m */,
+				C2B5BBC41CFBEEBC0054BE7C /* YUNUitlityTest.m */,
 				FAC0DCC71CD8F2EA0023E9CE /* YUNErrorTests.m */,
+				C2B5BC301CFC4D0F0054BE7C /* YUNDynamicFrameworkLoaderTest.m */,
+				C2B5BC3A1CFC526A0054BE7C /* YUNCryptoTest.m */,
 				FAE6EC751CCFAAD4003F9619 /* Info.plist */,
 			);
 			path = YUNNetKitTests;
@@ -432,6 +458,7 @@
 				FAB34E5C1CD2423800F3C961 /* YUNSettings+Internal.h in Headers */,
 				FAC0DCCB1CD8F7650023E9CE /* YUNRequest.h in Headers */,
 				FAB34E761CD2612500F3C961 /* YUNContants.h in Headers */,
+				C2B5BC351CFC50F40054BE7C /* YUNCrypto.h in Headers */,
 				FABFA3BB1CD0F58800B4505E /* YUNURLConnection.h in Headers */,
 				FAE0417F1CDF839100C19565 /* YUNDynamicFrameworkLoader.h in Headers */,
 				C258B9FE1CE5AEC00051D33B /* YUNAccessTokenCacheV3_17.h in Headers */,
@@ -578,6 +605,7 @@
 				C23A91AB1CF84322008F9552 /* YUNAppEventsStateManager.m in Sources */,
 				FAB34E6F1CD25FDC00F3C961 /* YUNError.m in Sources */,
 				FAE6EC811CCFAB31003F9619 /* YUNAccessToken.m in Sources */,
+				C2B5BC361CFC50F40054BE7C /* YUNCrypto.m in Sources */,
 				FAB34E651CD2561700F3C961 /* YUNRequestDataAttachment.m in Sources */,
 				FABFA3C11CD0F9CD00B4505E /* YUNLogger.m in Sources */,
 				C280C0E81CEF0EDA0069B32A /* YUNAppEvents.m in Sources */,
@@ -596,7 +624,11 @@
 				FAB34E6B1CD25B1E00F3C961 /* YUNRequestBodyTests.m in Sources */,
 				FAE6EC8F1CCFB6F9003F9619 /* YUNAccessTokenTests.m in Sources */,
 				FAE6EC741CCFAAD4003F9619 /* YUNNetKitTests.m in Sources */,
+				C2B5BBC31CFBE9980054BE7C /* YUNInternalUtilityTest.m in Sources */,
 				FAC0DCC81CD8F2EA0023E9CE /* YUNErrorTests.m in Sources */,
+				C2B5BBC51CFBEEBC0054BE7C /* YUNUitlityTest.m in Sources */,
+				C2B5BC311CFC4D0F0054BE7C /* YUNDynamicFrameworkLoaderTest.m in Sources */,
+				C2B5BC3B1CFC526A0054BE7C /* YUNCryptoTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -332,7 +332,13 @@ static NSString *g_overrideAppID = nil;
     
     // Fetch app settings and register for transaction notifications only if app supports implicit purchase events
     YUNAppEvents *instance = [YUNAppEvents singleton];
+    [instance publishInstall];
+    [instance fetchServerConfiguration:NULL];
     
+    // Restore time spent data, indicating that we're being called from "activateApp", which will,
+    // when appropriate, result in logging an "activated app" and "deactivate app" (for the
+    // previous session) App Event.
+    [YUNTimeSpentData restore:YES];
     
 }
 
@@ -370,7 +376,11 @@ static NSString *g_overrideAppID = nil;
               parameters:(NSDictionary *)parameters
              accessToken:(YUNAccessToken *)accessToken
 {
-    
+    [[YUNAppEvents singleton] intanceLogEvent:eventName
+                                   valueToSum:valueToSum
+                                   parameters:parameters
+                           isImplicitlyLogged:YES
+                                  accessToken:accessToken];
 }
 
 + (YUNAppEvents *)singleton
@@ -396,8 +406,8 @@ static NSString *g_overrideAppID = nil;
         YUNAppEventsState *copy = [_appEventsState copy];
         _appEventsState = [[YUNAppEventsState alloc] initWithToken:copy.tokenString appID:copy.appID];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self flushF]
-        })
+            [self flushOnMainQueue:copy forReason:flushReason];
+        });
     }
 }
 
@@ -416,7 +426,25 @@ static NSString *g_overrideAppID = nil;
     if ([defaults objectForKey:lastAttributionPingString]) {
         return;
     }
-    
+    [self fetchServerConfiguration:^{
+        NSDictionary *params = [YUNAppEventsUtility activityParametersDictionaryForEvent:@"MOBILE_APP_INSTALL"
+                                                                      implicitEventsOnly:NO
+                                                                shouldAccessAdertisingID:_serverConfiguration.isAdvertisingIDEnabled];
+        NSString *path = [NSString stringWithFormat:@"%@/avtivities", appID];
+        YUNRequest *request = [[YUNRequest alloc] initWithPath:path
+                                                    parameters:params
+                                                   tokenString:nil
+                                                    HTTPMethod:@"POST"
+                                                         flags:YUNRequestFlagDoNotInvalidateTokenOnError | YUNRequestFlagDisableErrorRecovery];
+        [request startWithCompletionHandler:^(YUNRequestConnection *connection, id result, NSError *error) {
+            if (!error) {
+                [defaults setObject:[NSDate date] forKey:lastAttributionPingString];
+                NSString *lastInstallResponseKey = [NSString stringWithFormat:@"com.yun11yun:lastInstallResponse%@", appID];
+                [defaults setObject:result forKey:lastInstallResponseKey];
+                [defaults synchronize];
+            }
+        }];
+    }];
 }
 
 // app events can use a server  configuration up to 24 hours old to minimize network traffic.
@@ -524,9 +552,249 @@ static NSString *g_overrideAppID = nil;
              eventDictionary];
         }
         
-        [self check]
+        [self checkPersistedEvents];
+        
+        if (_appEventsState.events.count > NUM_LOG_EVENTS_TO_TRY_TO_FLUSH_AFTER &&
+            self.flushBehavior != YUNAppEventsFlushBehaviorExplicitOnly) {
+            [self flushForReason:YUNAppEventsFlushReasonEvnetThreshold];
+        }
     }
 }
 
+// this fetches persisted event states.
+// for those matching the currently tracked events, add it.
+// otherwise, either flush (if not explicitonly behavior) or persist them back.
+- (void)checkPersistedEvents
+{
+    NSArray *existingEventsStates = [YUNAppEventsStateManager retrievePersistedAppEventsStates];
+    if (existingEventsStates.count == 0) {
+        return;
+    }
+    
+    YUNAppEventsState *matchingEventsPreviouslySaved = nil;
+    // reduce lock time by creating a new YUNAppEventsState tp collect matching persisted events.
+    @synchronized(self) {
+        if (_appEventsState) {
+            matchingEventsPreviouslySaved = [[YUNAppEventsState alloc] initWithToken:_appEventsState.tokenString appID:_appEventsState.appID];
+        }
+    }
+    for (YUNAppEventsState *saved in existingEventsStates) {
+        if ([saved isCompatibleWithAppEvnetsState:matchingEventsPreviouslySaved]) {
+            [matchingEventsPreviouslySaved addEventsFromAppEventState:saved];
+        } else {
+            if (self.flushBehavior == YUNAppEventsFlushBehaviorExplicitOnly) {
+                [YUNAppEventsStateManager persistAppEventsData:saved];
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self flushOnMainQueue:saved forReason:YUNAppEventsFlushReasonPersistedEvents];
+                });
+            }
+        }
+    }
+    if (matchingEventsPreviouslySaved.events.count > 0) {
+        @synchronized(self) {
+            if ([_appEventsState isCompatibleWithAppEvnetsState:matchingEventsPreviouslySaved]) {
+                [_appEventsState addEventsFromAppEventState:matchingEventsPreviouslySaved];
+            }
+        }
+    }
+}
+
+- (void)flushOnMainQueue:(YUNAppEventsState *)appEventsState
+               forReason:(YUNAppEventsFlushReason)reason
+{
+    if (appEventsState.events.count == 0) {
+        return;
+    }
+    [YUNAppEventsUtility ensureOnMainThread:NSStringFromSelector(_cmd) className:NSStringFromClass([self class])];
+    
+    [self fetchServerConfiguration:^(void){
+        NSString *JSONString = [appEventsState JSONStringForEvents:_serverConfiguration.implicitLoggingEnabled];
+        NSData *encodedEvents = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
+        if (!encodedEvents) {
+            [YUNLogger singleShotLogEntry:YUNLoggingBehaviorAppEvents
+                                 logEntry:@"YUNAppEvents: Flushing skipped - no events after removing implicitly logged ones.\n"];
+            return ;
+        }
+        NSMutableDictionary *postParameters = [YUNAppEventsUtility activityParametersDictionaryForEvent:@"CUSTOM_APP_EVENTS" implicitEventsOnly:appEventsState.areAllEventsImplicit shouldAccessAdertisingID:_serverConfiguration.advertisingIDEnabled];
+        postParameters[@"custom_events_file"] = encodedEvents;
+        if (appEventsState.numSkipped > 0) {
+            postParameters[@"num_skipped_events"] = [NSString stringWithFormat:@"%lu", (unsigned long)appEventsState.numSkipped];
+        }
+        
+        NSString *loggingEntry = nil;
+        if ([[YUNSettings loggingBehavior] containsObject:YUNLoggingBehaviorAppEvents]) {
+            NSData *prettyJSONData = [NSJSONSerialization dataWithJSONObject:appEventsState.events options:NSJSONWritingPrettyPrinted error:NULL];
+            NSString *prettyPrintedJsonEvents = [[NSString alloc] initWithData:prettyJSONData encoding:NSUTF8StringEncoding];
+            
+            // Remove this param -- just an encoding of the events which we pretty print later.
+            NSMutableDictionary *paramsForPrinting = [postParameters mutableCopy];
+            [paramsForPrinting removeObjectForKey:@"custom_events_file"];
+            
+            loggingEntry = [NSString stringWithFormat:@"YUNAppEvents: Flushed %ld, %lu events due to '%@' - %@\nEvents: %@",
+                            [YUNAppEventsUtility unixTimeNow],
+                            (unsigned long)appEventsState.events.count,
+                            [YUNAppEventsUtility flushReasonToString:reason],
+                            paramsForPrinting,
+                            prettyPrintedJsonEvents];
+        }
+        
+        YUNRequest *request = [[YUNRequest alloc] initWithPath:[NSString stringWithFormat:@"%@/activities", appEventsState.appID]
+                                                    parameters:postParameters
+                                                   tokenString:appEventsState.tokenString
+                                                    HTTPMethod:@"POST"
+                                                         flags:YUNRequestFlagDoNotInvalidateTokenOnError | YUNRequestFlagDisableErrorRecovery];
+        
+        [request startWithCompletionHandler:^(YUNRequestConnection *connection, id result, NSError *error) {
+            [self handleActivitiesPostCompletion:error
+                                    loggingEntry:loggingEntry
+                                  appEventsState:(YUNAppEventsState *)appEventsState];
+        }];
+    }];
+}
+
+- (void)handleActivitiesPostCompletion:(NSError *)error
+                          loggingEntry:(NSString *)loggingEntry
+                        appEventsState:(YUNAppEventsState *)appEventsState
+{
+    typedef NS_ENUM(NSUInteger, FBSDKAppEventsFlushResult) {
+        FlushResultSuccess,
+        FlushResultServerError,
+        FlushResultNoConnectivity
+    };
+    
+    [YUNAppEventsUtility ensureOnMainThread:NSStringFromSelector(_cmd) className:NSStringFromClass([self class])];
+    
+    FBSDKAppEventsFlushResult flushResult = FlushResultSuccess;
+    if (error) {
+        NSInteger errorCode = [error.userInfo[YUNRequestErrorHTTPStatusCodeKey] integerValue];
+        
+        // We interpret a 400 coming back from FBRequestConnection as a server error due to improper data being
+        // sent down.  Otherwise we assume no connectivity, or another condition where we could treat it as no connectivity.
+        flushResult = errorCode == 400 ? FlushResultServerError : FlushResultNoConnectivity;
+    }
+    
+    if (flushResult == FlushResultServerError) {
+        // Only log events that developer can do something with (i.e., if parameters are incorrect).
+        //  as opposed to cases where the token is bad.
+        if ([error.userInfo[YUNRequestErrorCategoryKey] unsignedIntegerValue] == YUNRequestErrorCategoryOther) {
+            NSString *message = [NSString stringWithFormat:@"Failed to send AppEvents: %@", error];
+            [YUNAppEventsUtility logAndNotify:message allowLogAsDeveloperError:!appEventsState.areAllEventsImplicit];
+        }
+    } else if (flushResult == FlushResultNoConnectivity) {
+        @synchronized(self) {
+            if ([appEventsState isCompatibleWithAppEvnetsState:_appEventsState]) {
+                [_appEventsState addEventsFromAppEventState:appEventsState];
+            } else {
+                // flush failed due to connectivity. Persist to be tried again later.
+                [YUNAppEventsStateManager persistAppEventsData:appEventsState];
+            }
+        }
+    }
+    
+    NSString *resultString = @"<unknown>";
+    switch (flushResult) {
+        case FlushResultSuccess:
+            resultString = @"Success";
+            break;
+            
+        case FlushResultNoConnectivity:
+            resultString = @"No Connectivity";
+            break;
+            
+        case FlushResultServerError:
+            resultString = [NSString stringWithFormat:@"Server Error - %@", [error description]];
+            break;
+    }
+    
+    [YUNLogger singleShotLogEntry:YUNLoggingBehaviorAppEvents
+                       formatString:@"%@\nFlush Result : %@", loggingEntry, resultString];
+}
+
+- (void)flushTimerFired:(id)arg
+{
+    [YUNAppEventsUtility ensureOnMainThread:NSStringFromSelector(_cmd) className:NSStringFromClass([self class])];
+    if (self.flushBehavior != YUNAppEventsFlushBehaviorExplicitOnly && !self.disableTimer) {
+        [self flushForReason:YUNAppEventsFlushReasonTimer];
+    }
+}
+
+- (void)appSettingsFetchStateResetTimerFired:(id)arg
+{
+    _serverConfiguration = nil;
+}
+
+- (void)applicationDidBecomeActive
+{
+    [YUNAppEventsUtility ensureOnMainThread:NSStringFromSelector(_cmd) className:NSStringFromClass([self class])];
+    
+    [self checkPersistedEvents];
+    
+    // Restore time spent data, indicating that we're not being called from "activateApp".
+    [YUNTimeSpentData restore:NO];
+}
+
+- (void)applicationMovingFromActiveStateOrTerminating
+{
+    // When moving from active state, we don't have time to wait for the result of a flush, so
+    // just persist events to storage, and we'll process them at the next activation.
+    YUNAppEventsState *copy = nil;
+    @synchronized (self) {
+        copy = [_appEventsState copy];
+        _appEventsState = nil;
+    }
+    if (copy) {
+        [YUNAppEventsStateManager persistAppEventsData:copy];
+    }
+    [YUNTimeSpentData suspend];
+}
+
+#pragma mark - Custom Audience
+
++ (YUNRequest *)requestForCustomAudienceThirdPartyIDWithAccessToken:(YUNAccessToken *)accessToken
+{
+    accessToken = accessToken ?: [YUNAccessToken currentAccessToken];
+    // Rules for how we use the attribution ID / advertiser ID for an 'custom_audience_third_party_id' Graph API request
+    // 1) if the OS tells us that the user has Limited Ad Tracking, then just don't send, and return a nil in the token.
+    // 2) if the app has set 'limitEventAndDataUsage', this effectively implies that app-initiated ad targeting shouldn't happen,
+    //    so use that data here to return nil as well.
+    // 3) if we have a user session token, then no need to send attribution ID / advertiser ID back as the udid parameter
+    // 4) otherwise, send back the udid parameter.
+    
+    if ([YUNAppEventsUtility advertisingTrackingStatus] == YUNAdvertisingTrackingDisallowed || [YUNSettings limitEventAndDataUsage]) {
+        return nil;
+    }
+    
+    NSString *tokenString = [YUNAppEventsUtility tokenStringToUseFor:accessToken];
+    NSString *udid = nil;
+    if (!accessToken) {
+        // We don't have a logged in user, so we need some form of udid representation.  Prefer advertiser ID if
+        // available, and back off to attribution ID if not.  Note that this function only makes sense to be
+        // called in the context of advertising.
+        udid = [YUNAppEventsUtility advertiserID];
+        if (!udid) {
+            udid = [YUNAppEventsUtility attributionID];
+        }
+        
+        if (!udid) {
+            // No udid, and no user token.  No point in making the request.
+            return nil;
+        }
+    }
+    
+    NSDictionary *parameters = nil;
+    if (udid) {
+        parameters = @{ @"udid" : udid };
+    }
+    
+    NSString *graphPath = [NSString stringWithFormat:@"%@/custom_audience_third_party_id", [[self singleton] appID]];
+    YUNRequest *request = [[YUNRequest alloc] initWithPath:graphPath
+                                                                   parameters:parameters
+                                                                  tokenString:tokenString
+                                                                   HTTPMethod:nil
+                                                                        flags:YUNRequestFlagDoNotInvalidateTokenOnError | YUNRequestFlagDisableErrorRecovery];
+    
+    return request;
+}
 
 @end

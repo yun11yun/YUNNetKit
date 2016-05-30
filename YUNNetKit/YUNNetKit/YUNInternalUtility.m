@@ -32,6 +32,55 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
 
 @implementation YUNInternalUtility
 
+#pragma mark - Class methods
+
++ (NSString *)appURLScheme
+{
+    return @"http";
+}
+
++ (NSURL *)appURLWithHost:(NSString *)host
+                     path:(NSString *)path
+          queryParameters:(NSDictionary *)queryParameters
+                    error:(NSError *__autoreleasing *)errorRef
+{
+    return [self URLWithScheme:[self appURLScheme]
+                          host:host
+                          path:path
+               queryParameters:queryParameters
+                         error:errorRef];
+}
+
++ (NSDictionary *)dictionaryFromURL:(NSURL *)url
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params addEntriesFromDictionary:[YUNUtility dictionaryWithQueryString:url.query]];
+    
+    // Only get the params from the fragment if it has authorize as the host
+    if ([url.host isEqualToString:@"authorize"]) {
+        [params addEntriesFromDictionary:[YUNUtility dictionaryWithQueryString:url.fragment]];
+    }
+    return params;
+}
+
++ (void)array:(NSMutableArray *)array addObject:(id)object
+{
+    if (object) {
+        [array addObject:object];
+    }
+}
+
++ (NSBundle *)bundleForStrings
+{
+    static NSBundle *bundle;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *stringsBundlePath = [[NSBundle mainBundle] pathForResource:@"FacebookSDKStrings"
+                                                                      ofType:@"bundle"];
+        bundle = [NSBundle bundleWithPath:stringsBundlePath] ?: [NSBundle mainBundle];
+    });
+    return bundle;
+}
 
 + (id)convertRequestValue:(id)value
 {
@@ -43,11 +92,108 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
     return value;
 }
 
++ (unsigned long)currentTimeInMilliseconds
+{
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    return (time.tv_sec * 1000) + (time.tv_usec / 1000);
+}
+
++ (BOOL)dictionary:(NSMutableDictionary *)dictionary
+setJSONStringForObject:(id)object
+            forKey:(id<NSCopying>)key
+             error:(NSError *__autoreleasing *)errorRef
+{
+    if (!object || !key) {
+        return YES;
+    }
+    NSString *JSONString = [self JSONStringForObject:object error:errorRef invalidObjectHandler:NULL];
+    if (!JSONString) {
+        return NO;
+    }
+    [self dictionary:dictionary setObject:JSONString forKey:key];
+    return YES;
+}
+
 + (void)dictionary:(NSMutableDictionary *)dictionary setObject:(id)object forKey:(id<NSCopying>)key
 {
     if (object && key) {
         [dictionary setObject:object forKey:key];
     }
+}
+
+
++ (NSURL *)URLWithHostPrefix:(NSString *)hostPrefix
+                        path:(NSString *)path
+             queryParameters:(NSDictionary *)queryParameters
+              defaultVersion:(NSString *)defaultVersion
+                       error:(NSError *__autoreleasing *)errorRef
+{
+    if ([hostPrefix length] && ![hostPrefix hasPrefix:@"."]) {
+        hostPrefix = [hostPrefix stringByAppendingString:@"."];
+    }
+    
+    NSString *host = @"facebook.com";
+    NSString *domainPart = [YUNSettings facebookDomainPart];
+    if ([domainPart length]) {
+        host = [[NSString alloc] initWithFormat:@"%@.%@", domainPart, host];
+    }
+    host = [NSString stringWithFormat:@"%@%@", hostPrefix ?: @"", host ?: @""];
+    
+    if ([path length]) {
+        if (![path hasPrefix:@"/"]) {
+            path = [@"/" stringByAppendingString:path];
+        }
+    }
+    return [self URLWithScheme:@"https"
+                          host:host
+                          path:path
+               queryParameters:queryParameters
+                         error:errorRef];
+}
+
++ (NSURL *)URLWithScheme:(NSString *)scheme
+                    host:(NSString *)host
+                    path:(NSString *)path
+         queryParameters:(NSDictionary *)queryParameters
+                   error:(NSError *__autoreleasing *)errorRef
+{
+    if (![path hasPrefix:@"/"]) {
+        path = [@"/" stringByAppendingString:path ?: @""];
+    }
+    
+    NSString *queryString = nil;
+    if ([queryParameters count]) {
+        NSError *queryStringError;
+        queryString = [@"?" stringByAppendingString:[YUNUtility queryStringWithDictionary:queryParameters error:&queryStringError]];
+        if (!queryString) {
+            if (errorRef != NULL) {
+                *errorRef = [YUNError invalidArgumentErrorWithName:@"queryParameters"
+                                                             value:queryParameters
+                                                           message:nil underlyingError:queryStringError];
+            }
+            return nil;
+        }
+    }
+    
+    NSURL *URL = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@://%@%@%@",scheme ?: @"",
+                                                host ?: @"",
+                                                path ?: @"",
+                                                queryString ?: @""]];
+    if (errorRef != NULL) {
+        if (URL) {
+            *errorRef = nil;
+        } else {
+            *errorRef = [YUNError unknownErrorWithMessage:@"Unknown error building URL."];
+        }
+    }
+    return URL;
+}
+
++ (BOOL)isBrowserURL:(NSURL *)URL
+{
+    NSString *scheme = [URL.scheme lowercaseString];
+    return ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]);
 }
 
 + (BOOL)object:(id)object isEqualToObject:(id)other;
@@ -59,13 +205,6 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
         return NO;
     }
     return [object isEqual:other];
-}
-
-+ (unsigned long)currentTimeInMilliseconds
-{
-    struct timeval time;
-    gettimeofday(&time, NULL);
-    return (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
 
 + (BOOL)isOSRunTimeVersionAtLeast:(NSOperatingSystemVersion)version
@@ -180,18 +319,6 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
     }
 }
 
-+ (NSBundle *)bundleForStrings
-{
-    static NSBundle *bundle;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *stringsBundlePath = [[NSBundle mainBundle] pathForResource:@"FacebookSDKStrings"
-                                                                      ofType:@"bundle"];
-        bundle = [NSBundle bundleWithPath:stringsBundlePath] ?: [NSBundle mainBundle];
-    });
-    return bundle;
-}
-
 + (void)extractPermissionsFromResponse:(NSDictionary *)responseObject
                     grantedPermissions:(NSMutableSet *)grantedPermissions
                    declinedPermissions:(NSMutableSet *)declinedPermissions
@@ -272,80 +399,6 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
     return object;
 }
 
-+ (void)array:(NSMutableArray *)array addObject:(id)object
-{
-    if (object) {
-        [array addObject:object];
-    }
-}
-
-+ (NSURL *)URLWithHostPrefix:(NSString *)hostPrefix
-                        path:(NSString *)path
-             queryParameters:(NSDictionary *)queryParameters
-              defaultVersion:(NSString *)defaultVersion
-                       error:(NSError *__autoreleasing *)errorRef
-{
-    if ([hostPrefix length] && ![hostPrefix hasPrefix:@"."]) {
-        hostPrefix = [hostPrefix stringByAppendingString:@"."];
-    }
-    
-    NSString *host = @"facebook.com";
-    NSString *domainPart = [YUNSettings facebookDomainPart];
-    if ([domainPart length]) {
-        host = [[NSString alloc] initWithFormat:@"%@.%@", domainPart, host];
-    }
-    host = [NSString stringWithFormat:@"%@%@", hostPrefix ?: @"", host ?: @""];
-    
-    if ([path length]) {
-        if (![path hasPrefix:@"/"]) {
-            path = [@"/" stringByAppendingString:path];
-        }
-    }
-    return [self URLWithScheme:@"https"
-                          host:host
-                          path:path
-               queryParameters:queryParameters
-                         error:errorRef];
-}
-
-+ (NSURL *)URLWithScheme:(NSString *)scheme
-                    host:(NSString *)host
-                    path:(NSString *)path
-         queryParameters:(NSDictionary *)queryParameters
-                   error:(NSError *__autoreleasing *)errorRef
-{
-    if (![path hasPrefix:@"/"]) {
-        path = [@"/" stringByAppendingString:path ?: @""];
-    }
-    
-    NSString *queryString = nil;
-    if ([queryParameters count]) {
-        NSError *queryStringError;
-        queryString = [@"?" stringByAppendingString:[YUNUtility queryStringWithDictionary:queryParameters error:&queryStringError]];
-        if (!queryString) {
-            if (errorRef != NULL) {
-                *errorRef = [YUNError invalidArgumentErrorWithName:@"queryParameters"
-                                                             value:queryParameters
-                                                           message:nil underlyingError:queryStringError];
-            }
-            return nil;
-        }
-    }
-    
-    NSURL *URL = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@://%@%@%@",scheme ?: @"",
-                                               host ?: @"",
-                                               path ?: @"",
-                                                queryString ?: @""]];
-    if (errorRef != NULL) {
-        if (URL) {
-            *errorRef = nil;
-        } else {
-            *errorRef = [YUNError unknownErrorWithMessage:@"Unknown error building URL."];
-        }
-    }
-    return URL;
-}
-
 + (id)objectForJSONString:(NSString *)string error:(NSError *__autoreleasing *)errorRef
 {
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
@@ -358,19 +411,16 @@ typedef NS_ENUM(NSUInteger, FBSDKInternalUtilityVersionShift)
     return [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:errorRef];
 }
 
-+ (NSDictionary *)dictionaryFromFBURL:(NSURL *)url
++ (UIViewController *)viewControllerForView:(UIView *)view
 {
-    // version 3.2.3 of the Facebook app encodes the parameters in the query but
-    // version 3.3 and above encode the parameters in the fragment;
-    // merge them together with fragment taking priority.
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params addEntriesFromDictionary:[YUNUtility dictionaryWithQueryString:url.query]];
-    
-    // Only get the params from the fragment if it has authorize as the host
-    if ([url.host isEqualToString:@"authorize"]) {
-        [params addEntriesFromDictionary:[YUNUtility dictionaryWithQueryString:url.fragment]];
+    UIResponder *responder = view.nextResponder;
+    while (responder) {
+        if ([responder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)responder;
+        }
+        responder = responder.nextResponder;
     }
-    return params;
+    return nil;
 }
 
 @end

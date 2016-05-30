@@ -31,7 +31,7 @@
             key = part;
             value = @"";
         } else {
-            key = [part substringFromIndex:index.location];
+            key = [part substringToIndex:index.location];
             value = [part substringFromIndex:index.location + index.length];
         }
         

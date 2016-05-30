@@ -243,7 +243,7 @@ static const long INACTIVE_SECONDS_QUANTA[] =
 + (void)setSourceApplication:(NSString *)sourceApplication openURL:(NSURL *)url
 {
     [self setSourceApplication:sourceApplication
-                 isFromAppLink:[YUNInternalUtility dictionaryFromFBURL:url][@"al_applink_data"] != nil];
+                 isFromAppLink:[YUNInternalUtility dictionaryFromURL:url][@"al_applink_data"] != nil];
 }
 
 + (void)setSourceApplication:(NSString *)sourceApplication isFromAppLink:(BOOL)isFromAppLink
