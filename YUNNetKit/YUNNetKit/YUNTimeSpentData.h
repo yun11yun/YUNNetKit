@@ -12,7 +12,7 @@
 
 extern NSString *const YUNTimeSpentFilename;
 
-// Class to encapsulate persisting of time spent data collected by [YUNAppEvents activateApp]. The activate ap App Event is
+// Class to encapsulate persisting of time spent data collected by [YUNAppEvents activateApp]. The activate app App Event is
 // logged when restore: is called with sufficient time since the last deactivation.
 @interface YUNTimeSpentData : NSObject
 

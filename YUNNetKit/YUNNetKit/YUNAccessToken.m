@@ -7,8 +7,11 @@
 //
 
 #import "YUNAccessToken.h"
+
+#import "YUNRequestPiggybackManager.h"
 #import "YUNInternalUtility.h"
 #import "YUNMath.h"
+#import "YUNSettings+Internal.h"
 
 NSString *const YUNAccessTokenDidChangeNotification = @"com.yun11yun.YUNAccessTokenDidChangeNotification";
 NSString *const YUNAccessTokenDidChangeUserID = @"FBSDKAccessTokenDidChangeUserID";
@@ -75,10 +78,10 @@ static YUNAccessToken *g_currentAccessToken;
         g_currentAccessToken = token;
         
         if (token == nil) {
-            
         }
         
-#warning 此处需保存accessToken
+        
+        [[YUNSettings accessTokenCache] cacheAccessToken:token];
         [[NSNotificationCenter defaultCenter] postNotificationName:YUNAccessTokenDidChangeNotification object:[self class] userInfo:userInfo];
         
     }

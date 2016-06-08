@@ -7,8 +7,13 @@
 //
 
 #import "YUNSettings.h"
+#import "YUNAccessTokenCache.h"
 
 @interface YUNSettings (Internal)
+
++ (YUNAccessTokenCache *)accessTokenCache;
+
+- (void)setAccessTokenCache;
 
 + (NSString *)graphAPIDebugParamValue;
 

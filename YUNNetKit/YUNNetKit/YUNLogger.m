@@ -28,7 +28,7 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
 - (instancetype)initWithLoggingBehavior:(NSString *)logginBehavior
 {
     if ((self = [super init])) {
-#warning setup isActive
+        _isActive = [[YUNSettings loggingBehavior] containsObject:logginBehavior];
         _loggingBehavior = logginBehavior;
         if (_isActive) {
             _internalContents = [[NSMutableString alloc] init];

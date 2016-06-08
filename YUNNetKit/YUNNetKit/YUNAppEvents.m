@@ -280,7 +280,11 @@ static NSString *g_overrideAppID = nil;
       parameters:(NSDictionary *)parameters
      accessToken:(YUNAccessToken *)accessToken
 {
-    
+    [[YUNAppEvents singleton] instanceLogEvent:eventName
+                                   valueToSum:valueToSum
+                                   parameters:parameters
+                           isImplicitlyLogged:NO
+                                  accessToken:accessToken];
 }
 
 + (void)logPurchase:(double)purchaseAmount
@@ -376,7 +380,7 @@ static NSString *g_overrideAppID = nil;
               parameters:(NSDictionary *)parameters
              accessToken:(YUNAccessToken *)accessToken
 {
-    [[YUNAppEvents singleton] intanceLogEvent:eventName
+    [[YUNAppEvents singleton] instanceLogEvent:eventName
                                    valueToSum:valueToSum
                                    parameters:parameters
                            isImplicitlyLogged:YES
@@ -470,12 +474,16 @@ static NSString *g_overrideAppID = nil;
     }
 }
 
-- (void)intanceLogEvent:(NSString *)eventName
+- (void)instanceLogEvent:(NSString *)eventName
              valueToSum:(NSNumber *)valueToSum
              parameters:(NSDictionary *)parameters
      isImplicitlyLogged:(BOOL)isImplicitlyLogged
             accessToken:(YUNAccessToken *)accessToken
 {
+    if (isImplicitlyLogged && _serverConfiguration && !_serverConfiguration.isImplicitLoggingSupported) {
+        return;
+    }
+    
     if (isImplicitlyLogged && !_explicitEventsLoggedYet) {
         _explicitEventsLoggedYet = YES;
     }

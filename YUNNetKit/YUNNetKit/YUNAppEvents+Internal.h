@@ -115,24 +115,24 @@ extern NSString *const YUNAppEventsNativeLoginDialogEndTime;
 
 extern NSString *const YUNAppEventsWebLoginE2E;
 
-extern NSString *const YUNAppEventNameFBSDKLikeButtonImpression;
-extern NSString *const YUNAppEventNameFBSDKLoginButtonImpression;
-extern NSString *const YUNAppEventNameFBSDKSendButtonImpression;
-extern NSString *const YUNAppEventNameFBSDKShareButtonImpression;
+extern NSString *const YUNAppEventNameYUNLikeButtonImpression;
+extern NSString *const YUNAppEventNameYUNLoginButtonImpression;
+extern NSString *const YUNAppEventNameYUNSendButtonImpression;
+extern NSString *const YUNAppEventNameYUNShareButtonImpression;
 
-extern NSString *const YUNAppEventNameFBSDKLikeButtonDidTap;
-extern NSString *const YUNAppEventNameFBSDKLoginButtonDidTap;
-extern NSString *const YUNAppEventNameFBSDKSendButtonDidTap;
-extern NSString *const YUNAppEventNameFBSDKShareButtonDidTap;
+extern NSString *const YUNAppEventNameYUNLikeButtonDidTap;
+extern NSString *const YUNAppEventNameYUNLoginButtonDidTap;
+extern NSString *const YUNAppEventNameYUNSendButtonDidTap;
+extern NSString *const YUNAppEventNameYUNShareButtonDidTap;
 
-extern NSString *const YUNAppEventNameFBSDKLikeControlDidDisable;
-extern NSString *const YUNAppEventNameFBSDKLikeControlDidLike;
-extern NSString *const YUNAppEventNameFBSDKLikeControlDidPresentDialog;
-extern NSString *const YUNAppEventNameFBSDKLikeControlDidTap;
-extern NSString *const YUNAppEventNameFBSDKLikeControlDidUnlike;
-extern NSString *const YUNAppEventNameFBSDKLikeControlError;
-extern NSString *const YUNAppEventNameFBSDKLikeControlImpression;
-extern NSString *const YUNAppEventNameFBSDKLikeControlNetworkUnavailable;
+extern NSString *const YUNAppEventNameYUNLikeControlDidDisable;
+extern NSString *const YUNAppEventNameYUNLikeControlDidLike;
+extern NSString *const YUNAppEventNameYUNLikeControlDidPresentDialog;
+extern NSString *const YUNAppEventNameYUNLikeControlDidTap;
+extern NSString *const YUNAppEventNameYUNLikeControlDidUnlike;
+extern NSString *const YUNAppEventNameYUNLikeControlError;
+extern NSString *const YUNAppEventNameYUNLikeControlImpression;
+extern NSString *const YUNAppEventNameYUNLikeControlNetworkUnavailable;
 
 extern NSString *const YUNAppEventParameterDialogErrorMessage;
 

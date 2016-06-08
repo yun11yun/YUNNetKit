@@ -23,6 +23,7 @@
 #import "YUNServerConfigurationManager.h"
 #import "YUNTypeUtility.h"
 #import "YUNErrorRecoveryAttempter.h"
+#import "YUNAppEvents+Internal.h"
 
 NSString *const YUNNonJSONResponseProperty = @"YUN11YUN_NON_JSON_RESULT";
 
@@ -546,8 +547,10 @@ typedef NS_ENUM(NSUInteger, YUNRequestConnectionState)
     if (responseUTF8 == nil) {
         NSString *base64Data = [data length] != 0 ? [data base64EncodedStringWithOptions:0] : @"";
         if (base64Data != nil) {
-            
-#warning YUNAppEvents
+            [YUNAppEvents logImplicitEvent:@"yun11yun_response_invalid_utf8"
+                                valueToSum:nil
+                                parameters:nil
+                               accessToken:nil];
         }
     }
     

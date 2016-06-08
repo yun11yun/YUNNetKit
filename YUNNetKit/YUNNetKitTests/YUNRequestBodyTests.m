@@ -31,11 +31,6 @@
 - (void)testFromValue
 {
     [_requestBody appendWithKey:@"uid" fromValue:@"1" logger:nil];
-    
-    NSString *dataString = [[NSString alloc] initWithData:_requestBody.data encoding:NSUTF8StringEncoding];
-    
-    
-    
 }
 
 @end

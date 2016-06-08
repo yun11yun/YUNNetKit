@@ -32,7 +32,7 @@ NSString *const YUNLoggingBehaviorGraphAPIDebugInfo = @"graph_api_debug_info";
 NSString *const YUNLoggingBehaviorNetworkRequests = @"network_requests";
 NSString *const YUNLoggingBehaviorDeveloperErrors = @"developer_errors";
 
-
+static YUNAccessTokenCache *g_tokenCache;
 static NSMutableSet *g_loggingBehavior;
 static NSString *g_legacyUserDefaultTokenInformationKeyName = @"YUNAccessTokenInformationKey";
 static NSString *const YUNSettingsLimitEventAndDataUsage = @"com.yun11yun.sdk:YUNSettingsLimitEventAdnDataUsage";
@@ -44,7 +44,7 @@ static NSString *g_userAgentSuffix;
 + (void)initialize
 {
     if (self == [YUNSettings class]) {
-#warning init accessTokenCache
+        g_tokenCache = [[YUNAccessTokenCache alloc] init];
     }
 }
 
@@ -161,6 +161,18 @@ YUNSETTINGS_PLIST_CONFIGURATION_SETTING_IMPL(NSNumber, FacebookJpegCompressionQu
 }
 
 #pragma mark - Internal
+
++ (YUNAccessTokenCache *)accessTokenCache
+{
+    return g_tokenCache;
+}
+
+- (void)setAccessTokenCache:(YUNAccessTokenCache *)cache
+{
+    if (g_tokenCache != cache) {
+        g_tokenCache = cache;
+    }
+}
 
 + (NSString *)userAgentSuffix
 {
